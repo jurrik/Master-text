@@ -11,7 +11,7 @@
 % One-page layout: (proof-)reading on display
 %\documentclass[11pt,oneside,a4paper]{book}
 % Two-page layout: final printing
- \documentclass[11pt,twoside,a4paper]{book}   
+\documentclass[11pt,twoside,a4paper]{book}   
 %=-=-=-=-=-=-=-=-=-=-=-=--=%
 % The user of this template may find useful to have an alternative to these 
 % officially suggested packages:
@@ -57,9 +57,9 @@
 \newcommand\TypeOfWork{Diplomová práce} \typeout{Diplomova prace}
 \newcommand\StudProgram{Otevřená informatika, Magisterský}
 \newcommand\StudBranch{Počítačové vidění a digitální obraz}
-\newcommand\WorkTitle{Atomatizovaná analýza částic v mikroskopických snímcích}
+\newcommand\WorkTitle{Automatizovaná analýza částic v mikroskopických snímcích}
 \newcommand\FirstandFamilyName{Bc. Jiří Palas}
-\newcommand\Supervisor{doc. Ing. RNDR. Marcel Jiřina, PhD.}
+\newcommand\Supervisor{doc. RNDr. Ing. Marcel Jiřina, PhD.}
 
 
 % Pouzijete-li pdflatex, tak je prijemne, kdyz bude mit vase prace
@@ -175,14 +175,13 @@ Na tomto místě bych rád poděkoval mamince za vaření obědů a večeří b�
 %%%%%%%%%%%%%%%%%%%%%%%%%%%   Prohlaseni / Declaration 
 
 \declaration{V~Praze dne 11.\,5.\,2015}
-%\declaration{In Kořenovice nad Bečvárkou on May 15, 2008}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%    Abstract 
  
 \abstractpage
 
-This thesis aims to design and implement a unified data source about timetable from the university information system KOS for Student's Crutch and its related applications. The document analyses the current solution in Student's Crutch and existing solutions in other applications. Based on this analysis, it proposes its own solution, which is then implemented and tested. The main emphasis is given on compatibility with the Student's Crutch related applications.
+Abstrakt v angličtině.
 
 % Prace v cestine musi krome abstraktu v anglictine obsahovat i
 % abstrakt v cestine.
@@ -192,19 +191,18 @@ This thesis aims to design and implement a unified data source about timetable f
 \vskip 2.75\baselineskip
 
 \noindent
-Tato práce si klade za cíl návrh a implementaci jednotného datového zdroje informací o rozvrhu z univerzitního systému KOS pro aplikace z okruhu Studentovy Berličky. Práce se zabývá analýzou stávajícího řešení ve Studentově Berličce a existujících řešení v jiných aplikacích. Na jejím základě je navrženo vlastní řešení, které je následně implementováno a otestováno. Velký důraz je kladen na kompatibilitu s aplikacemi Studentovy Berličky.
+TODO Ještě nějak lépe přeformulovat
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Obsah / Table of Contents 
+Tato práce si klade za cíl návrh a implementaci software zaměřeného na automatizovanou analýzu částic v mikroskopických snímcích. Práce se zabývá analýzou současných metod zpracování obrazu a strojového učení využitelnými pro automatizovanou detekci, klasifikaci a analýzu mikroskopických částic. Na jejím základě je navržen a implementován algoritmus pro automatizovanou detekci a klasifikaci částic. V rámci práce jsou navrženy a implementovány metody vizuální a interaktivní analýzu detekovaných a klasifikovaných částic.
+
+%******************************  Obsah / Table of Contents 
 \tableofcontents
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Seznam obrazku / List of Figures 
+%******************************  Seznam obrazku / List of Figures 
 \listoffigures
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Seznam tabulek / List of Tables
+%******************************  Seznam tabulek / List of Tables
 \listoftables
-
 
 %**************************************************************
 
@@ -225,12 +223,74 @@ Tato práce si klade za cíl návrh a implementaci jednotného datového zdroje 
 %*****************************************************************************
 \chapter{Úvod}
 
+\section{Motivace}
+Popsat současný stav věci, 
+Klíčové součásti: detekce, klasifikace, analýza
+
+\section{Cíle}
+
+\section{Přehled}
+
+\section{Elektronová mikroskopie}
+Krátký stručný popis jak to funguje co se tam 
+
+\section{Data}
+Popis dat (obrázků, snímků). Co v nich hledáme? Proč to hledáme?
+
+% *****************************************************************************
+\chapter{Dostupné metody}
+
+\section{Detekce}
+Krátká rešerše vybraných metod.
+
+\section{Klasifikace}
+Krátká rešerše vybraných metod.
+
+\section{Analýza}
+
+\chapter{Implementace}
+
+\section{Detekce}
+Popis použitého algoritmu detekce.
+
+Metoda detekce kontur (přečíst a zpracovat):
+Suzuki, S. and Abe, K., Topological Structural Analysis of Digitized Binary Images by Border Following. CVGIP 30 1, pp 32-46 (1985)
+
+K implementaci této metody bylo využito OpenCV.
+
+Co se detekovalo špatně během procesu a jak jsem to optimalizoval.
+Jak vizualizuji výsledky detekce.
+
+\section{Klasifikace}
+\subsection{Výběr příznaků}
+\subsection{Výběr klasifikátoru}
+Popis použitého algoritmu klasifikace. Klasifikátor KNN. 
+Proč jsem zvolil zrovna KNN a ne třeba SVM. Postup do klasifikátoru.
+Nastavení parametrů
+jak se přidávají data
+Jak jsem se vypořádal s problémem registrace klasifikátoru k obrázku.
+Jak jsem se vypořádal s problémem ukládání naučeného klasifikátoru.
+Jak vizualizuji výsledky detekce.
+
+\section{Analýza}
+Popis navržených metod hierarchického shlukování.
+
+\chapter{Výsledky}
+Zde vyhodnocení použitých algoritmů na 10 testovacích obrázcích.
+Použité obrázky. Do příloh ve velkém formátu.
+
+\section{Detekce}
+Vyhodnocení segmentace. Co se nedetekovalo a mělo detekovat
+
+\section{Klasifikace}
+Ukázat vstupní nastavení příkladů na kterých se naučí klasifikátor. Ukázat na pár snímcích jak to dopadlo. Plus vyhodnocení jak to dopadlo. Procentuální vyhodnocení úspěšnosti vybraného klasifikátoru.
 
 \chapter{Závěr}
+\section{Shrnutí práce}
+Čeho jsem dosáhl.
 
-
-\section{Splnění cíle ze zadání}
-
+\section{Další směřování}
+Co by se dalo přidat nebo změnit.
 
 %*****************************************************************************
 % Seznam literatury je v samostatnem souboru reference.bib. Ten
@@ -275,19 +335,16 @@ Tato práce si klade za cíl návrh a implementaci jednotného datového zdroje 
 
 %*****************************************************************************
 \chapter{Obsah přiloženého CD}
-V této kapitole naleznete obsah CD přiloženého k této bakalářské práci.
+V této kapitole naleznete obsah CD přiloženého k této diplomové práci.
 
 \begin{itemize}
-\item readme.txt - popis obsahu CD s dalšími informacemi
-\item aplikace/ - zdrojové kódy aplikace v PHP
-\begin{itemize}
-\item schema.sql - SQL definice hlavní databáze aplikace
-\end{itemize}
-\item text/
-\begin{itemize}
-\item src/ - zdrojový text v LaTeXu, včetně obrázků a šablon
-\item palasjir\_2015dip.pdf - text bakalářské práce ve formátu PDF
-\end{itemize} 
+	\item readme.txt - popis obsahu CD s dalšími informacemi
+	\item pattern/ - zdrojové kódy aplikace v jazyce Java
+	\item text/
+	\begin{itemize}
+		\item src/ - zdrojový text v LaTeXu, včetně obrázků a šablon
+		\item palasjir\_2015dip.pdf - text diplomové práce ve formátu PDF
+	\end{itemize} 
 \end{itemize}
 
 \end{document}
