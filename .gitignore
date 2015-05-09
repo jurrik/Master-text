@@ -1,14 +1,10 @@
-
 *.aux
-
 *.lof
-
 *.log
-
 *.lot
-
 *.out
-
 *.gz
-
 *.toc
+*.bbl
+*.blg
+*.dvi
