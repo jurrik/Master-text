@@ -52,6 +52,7 @@
 \usepackage{bera}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{float}
 %\usepackage{indentfirst} %1. odstavec jako v cestine.
 
 \usepackage{k336_thesis_macros} % specialni makra pro formatovani DP a BP
@@ -352,13 +353,13 @@ Cílem detekčního algoritmu je úspěšně nalézt jednotlivé částice v obr
 
 Pro úspěšnou detekci částic je nejprve potřeba jejich segmentace. Segmentace je proces při kterém jsou ze snímku odděleny jednotlivé objekty a části od pozadí. Jedná se často o nejsložitější a nejdůležitější krok při analýze obrazu.
 
-Navzdory důležitosti, existuje pouze limitované množství zdrojů o automatické segmentaci nanočástic využitelných pro náš případ. Všechny nalezené zdroje se zabývají převážně detekcí NP kruhovitého tvaru \cite{art:macfarland}\cite{art:golotov}\cite{art:chen}. Na druhou stranu ale existuje rozsáhlý výzkum zabývající se segmentací biologických buněk. V následujícím textu je shrnuta literatura zabývající se segmentací biologických buněk. Tento směr výzkumu je přímo spjat s jedním z cílů této práce \cite{art:ultimate}.
+Navzdory důležitosti, existuje pouze limitované množství zdrojů o automatické segmentaci nanočástic využitelných pro náš případ. Všechny nalezené zdroje se zabývají převážně detekcí NP kruhovitého tvaru \cite{art:mcfarland}\cite{art:glotov}\cite{art:chen}. Na druhou stranu ale existuje rozsáhlý výzkum zabývající se segmentací biologických buněk. V následujícím textu je shrnuta literatura zabývající se segmentací biologických buněk. Tento směr výzkumu je přímo spjat s jedním z cílů této práce \cite{art:ultimate}.
 
 Velice často používanou metodou pro segmentaci buněk je je prahování založené na charakteristikách histogramu obrázku. Přehled prahovacích technik uvádí \cite{art:sahoo88}. Pro obdržení uspokojivého výsledku segmentace za pomoci prahování je ale zapotřebí pozadí obrázku s neměnnou intenzitou. Je také třeba pamatovat na to, že malá změna v úrovni prahu může mít negativní dopad na na další analýzu obrázku \cite{art:wahlby}.
 
-\textbf{Adaptivní prahování} nebo také lokální automatické prahování může být řešení pro prahování obrázku ve kterém intezita pozadí kolísá. Tato metoda ale stále neřeší problémy spojené s segementací objektů které tvoří shluky. Prahování nemusí být finálním krokem v segmentačním procesu. Naopak často bývá využíván právě jako první krok před dalším zpracování např. pomocí morfologických operací \cite{book:imgproc_gonzalez} \cite{book:art:wahlby}.
+\textbf{Adaptivní prahování} nebo také lokální automatické prahování může být řešení pro prahování obrázku ve kterém intezita pozadí kolísá. Tato metoda ale stále neřeší problémy spojené s segementací objektů které tvoří shluky. Prahování nemusí být finálním krokem v segmentačním procesu. Naopak často bývá využíván právě jako první krok před dalším zpracování např. pomocí morfologických operací \cite{book:imgproc_gonzalez} \cite{art:wahlby}.
 
-Další hojně užívanou metodou pro segmentaci buněk je tzv. \textit{watershed} a jeho odvozeniny. Metoda nejprve nalezne body (markery) ukazující přibližnou polohu buněk a následně segmentuje obrázek na několik oblastí ovlivněných markery \cite{art:watershed1} \cite{art:watershed2} \cite{art:watershed3} \cite{art:wahlby}.
+Další hojně užívanou metodou pro segmentaci buněk je tzv.~\textbf{watershed} a jeho odvozeniny. Metoda nejprve nalezne body (markery) ukazující přibližnou polohu buněk a následně segmentuje obrázek na několik oblastí ovlivněných markery~\cite{art:watershed1} \cite{art:watershed2}\cite{art:watershed3}\cite{art:wahlby}.
 
 \textbf{Graph-cut} metody jsou také aplikovány na segmentaci buněk. Metoda zkonstruuje graf z obrázku kde každý pixel odpovídá jednotlivým vrcholům grafu. Každý pár vrcholů je spojen se sousedními vrcholy hranou jejíž váha odpovídá podobnosti intenzit sousedních pixelů. Segmentace pak hledá normalizovaný minimální řez grafem \cite{art:grabcut1}. Avšak tento přístup špatně separuje překrývající se buňky, obzvláště pokud je jejich intenzita podobná. Existuje úprava která tento problém řeší, funguje však pouze na částice buňky kruhového tvaru \cite{art:ultimate}.
 
@@ -391,10 +392,12 @@ Binární obrázek získaný prahováním je následně upraven pomocí morfolog
 
 V binarní obrázek, upraveným morfologickou operací jsou následně prostřednictvím algoritmu \cite{suzuki85} nalezeny obrysy jednotlivých NP. Obrys je reprezentován vektorem bodů, kterého ho tvoří.
 
-K detekci byla využita implementace adaptivní filtrace a algoritmu \cite{suzuki85} z OpenCV\cite{opencv}. Adaptivní filtrace využívá funkce \textit{adaptiveThresh} a algoritmus na vyhledávání obrysů pak funkci \textit{findContours}.
+K detekci byla využita implementace adaptivní filtrace a algoritmu \cite{suzuki85} z OpenCV\cite{opencv_library}. Adaptivní filtrace využívá funkce \textit{adaptiveThresh} a algoritmus na vyhledávání obrysů pak funkci \textit{findContours}.
 
 \subsection{Výsledky segmentace}
-Segmentace a její vyhodnocení výsledků probíhalo na datech snímcích pocházejících z UMG. Ze snímků které jsou k dispozici je zvoleno 7 mikroskopických snímků obsahujících variující tvary částic. Výstupy segmentace algoritmu jsou prezentovány pomocí barevného značení, kde kontura nalezené částice je zobrazena červeně.
+Segmentace a její vyhodnocení výsledků probíhalo na datech snímcích pocházejících z UMG. Ze snímků které jsou k dispozici je zvoleno 7 mikroskopických snímků obsahujících variující tvary částic.Ve vzorcích 1, 2, 7 se vyznačují malou mírou shlukování částic. Naopak ve vzorcích 3, 4, 5, 6 jsou částice poskládány blíže sobě a některé se překrývají.
+
+Výstupy segmentace algoritmu jsou prezentovány pomocí barevného značení, kde kontura nalezené částice je zobrazena červeně.
 
 \begin{figure}[ht]
 	\centering
@@ -405,7 +408,7 @@ Segmentace a její vyhodnocení výsledků probíhalo na datech snímcích poch�
 
 Příklad výstupu segmentačního algoritmu je možné pozorovat na obr.~\ref{fig:segment_result}. Detaily chybně provedené segmentace jsou znázorněny na obr.~\ref{fig:segment_problems}. 
 
-Vyhodnocení výstupu segmentace je možné pozorovat v tabulce \ref{tab:segment_results}. Nejčastějším problémem při segmentaci je segmentace spojených částic typu tyčinka a kolečko.  Ve vzorcích 1, 2, 7 se vyznačují malou mírou shlukování částic. Naopak ve vzorcích 3, 4, 5, 6 jsou částice poskládány blíže sobě a některé se překrývají.
+Vyhodnocení výstupu segmentace je možné pozorovat v tabulce \ref{tab:segment_results}. Nejčastějším problémem při segmentaci je segmentace spojených částic typu tyčinka a kolečko.  
 
 \begin{figure}[ht]
 	\begin{center}
@@ -448,10 +451,32 @@ Celkem & 98                & 2809      & 0.965    \\ \hline
 
 \chapter{Klasifikace}
 \label{sec:klasifikace}
-Tato kapitola se pojednává o klasifikaci NP do jednotlivých tříd A, B nebo C. Vstupem pro klasifikátor je množina laborantem ručně klasifikovaných NP na jejímž základě probíhá zařazení nezařazených NP do příslušných tříd. Trénovací množinu určuje uživatel prostřednictvím rozhraní aplikace.
+Tato kapitola se se zabývá problematikou klasifikace detekovaných částic. V úvodu kapitoly je rozvedena problematika klasifikace a uvedeny metody strojového učení, které je možné využít při řešení této problematiky. Následně je rozveden přístup pro klasifikaci částic do jednotlivých tříd A, B nebo C, použitý v aplikaci  V závěru kapitoly pak jsou uvedeny jednotlivé výsledky klasifikace pomocí zvoleného K-NN klasifikátoru.
 
 \subsection{Úvod do problematiky}
-Protože je trénovací množina určena uživatelem je využito algoritmu učení s učitelem. Mezi takové algoritmy patří např. rozhodovací stromy, Support Vector Machine (SVM), naivní Bayes, neuronové sítě nebo algoritmus k-nejbližších sousedů (K-NN). Jednotlivé klasifikační metody shrnuje \cite{book:pattern_class}
+Klasifikace je jedním z nejčastějších problémů se kterými se člověk setkává. Klasifikační problém se objevuje vždy, když určitý objekt potřebuje být začleněn do předdefinované skupiny \cite{art:neural_networks}.
+
+Mezi metody, které řeší klasifikační problémy patří metody strojového učení. V biologii bylo strojové učení již aplikováno na řadu problému v oblastech vývoje léků \cite{art:machine1}, analýza sekvencí DNA \cite{art:machine2}, proteomika \cite{art:machine3} a další. Mimo biologii se strojové učení využívá např. pro rozpoznávání textu, obličejů atd. Metody strojového učení dělíme na dvě skupiny, učení bez učitele a učení s učitelem.
+
+První skupinou jsou metody tzv. \textit{učení bez učitele}. Tyto metody se obvykle využívají při zkoumání dat o kterých máme málo informací nebo nedokážeme vytvořit trénovací metody. Cílem učení bez učitele je spojovat skupiny dat do shluků na základě měření podobnosti nebo usnadnění následného vytěžování dat redukcí jejich dimensionality.
+
+Druhou skupinu tvoří tvz. \textit{metody učení s učitelem}. V tomto přístupu, uživatelé generují, z celé sady dat, data trénovací pomocí anotace reprezentativních vzorků. Anotaci dat se rozumí přiřazení vzorku do skupiny. Na základě těchto trénovacích dat je poté algoritmus strojového učení schopen podle definovaných pravidel a postupů zařadit do jednotlivých tříd i dosud neznámé vzorky dat.
+
+Protože jednotlivé částice jsou klasifikovány na základě anotací poskytnutých laborantem jsou nadále uvažovány pouze metody strojového učení s učitelem.
+
+Jak bylo řečeno ve strojovém učení s učitelem, člověk, jako expert, nejprve definuje trénovací data anotováním vybraných příkladů z celkové množiny dat. V našem případě tvoří množinu všech dat detekované částice z jednoho či několika snímků. Trénovací množina je pak vybírána z této množiny anotováním jednotlivých částic. Ve strojovém učení proces trénování slouží k získání vnitřních parametrů klasifikačního modelu na jejichž základě jsou pak jednotlivé příklady klasifikovány.
+
+Mezi současné klasifikační algoritmy učení s učitelem patří např. rozhodovací stromy, Support Vector Machine (SVM), naivní Bayes, AdaBoost, neuronové sítě nebo algoritmus k-nejbližších sousedů (K-NN) a další ~\cite{book:pattern_class}.
+
+Bayesovská rozhodovací metodika spoléhá na statistický pravděpodobnostní model. Podle tohoto modelu je pak určena jednotlivá příslušnost instancí do tříd \cite{art:neural_networks}.
+
+Metoda \textit{rozhodovacích stromů} je založena na víceúrovňovém rozhodování. Spočívá na principu kdy je komplexní rozhodovací problém rozložen na více jednodušších rozhodovacích problémů na jednotlivých úrovních \cite{art:decision_trees}. 
+
+Support vector machines (SVM) je metoda která se snaží nalézt dělící nadrovinu, která rozdělí data rozdílných tříd, tak aby vzdálenost nejbližších trénovacích příkladů z různých tříd byla co největší. Protože data různých tříd nemusí být vždy oddělitelná pomocí nadroviny většina implemtací SVM je založena na \textit{měkkém okraji} (soft-margin), který umožňuje špatnou klasifikaci. Špatně klasifikované příklady jsou pak váženy cenovou funkcí. SVM je robustní na příznaky s vysokým podílem šumu \cite{art:machine_in_cell}.
+
+Adaptive bootsing (AdaBoost) je založen na kombinaci několika slabých klasifikátorů k formování silného klasifikátoru iterativním přidáváním a vážením jednotlivých slabých klasifikátorů. Příkladem slabého klasifikátoru může být např. prahová funkce. Nevýhodou AdaBoostu je náchylnost na data s vysokým podílem šumu a tzv. \textit{outlierů}.
+
+Neuronové sítě je skupina algoritmů inspirovanými neuronovými spojeními v lidském mozku. Skládá se z umělých neuronů, jejichž inspirace pochází právě z biologických neuronů. Jednotlivé neurony jsou navzájem propojeny a navzájem si předávají signály, které se transformují pomocí přenosových funkcí. Neuron může mít mnoho vstupů ale pouze jeden výstup. Příkladem neuronu může být např. perceptron~\cite{art:neural_networks}. 
 
 Typické kroky při tvorbě klasifikátoru učení s učitelem jsou:
 \begin{itemize}
@@ -462,22 +487,20 @@ Typické kroky při tvorbě klasifikátoru učení s učitelem jsou:
 \item Vyhodnocení výsledků
 \end{itemize}
 
-\section{Trénovací množina}
-Trénovací množinu dat tvoří data jednotlivé částice s přiřazenou příslušností do A, B nebo C. Částice jsou získávány jako výstup detekčního algoritmu. Jednotlivé částice od sebe odlišujeme tvarem, definovaným vektorem bodů, a velikostí plochy v pixelech.
+\section{Trénovací množina a volba příznaků}
+Trénovací množinu dat tvoří laborantem anotované částice s přiřazenou příslušností do A, B nebo C. Částice jsou získávány jako výstup detekčního algoritmu. Anotaci a výběr trénovací množiny pak zajistí laborant skrze rozhraní aplikace.
 
-K vytvoření trénovací množiny se v aplikaci nachází interaktivní uživatelské rozhraní, které umožňuje přiřadit jednotlivým částicím příslušnost do tříd a vložit množinu trénovacích dat do klasifikátoru.
+Jednotlivé částice od sebe odlišujeme tvarem, definovaným vektorem bodů, a velikostí plochy v pixelech. Tyto dva příznaky použijeme k zformování vektoru příznaků na který budeme aplikovat klasifikační algoritmus.
 
 \section{Volba klasifikačního algoritmu}
 
-Na základě malého počtu příznaků a průběžných experimentálních výsledků byl ke klasifikaci je vybrán algoritmus \textbf{k-nejbližších sousedů (K-NN)}.
+Na základě malého počtu příznaků, tvaru prostoru příznaků a průběžných experimentálních výsledků byl ke klasifikaci je vybrán algoritmus \textbf{k-nejbližších sousedů (K-NN)}.
 
-Jak bylo zmíněno algoritmů strojového učení je celá řada. Jak tedy vybrat ten správný. Správným klasifikátorem se míní takový který bude úspěšně klasifikovat NP s 80\% přesností. Pro výběr klasifikátoru byla zvolena experimentální strategie. Tedy implementovat klasifikátor otestovat s jakou přesností klasifikuje. Pokud se klasifikační přesnost pohybuje pod danou hranicí pak . Přibližná hranice byla stanovena na 80\% přesnosti klasifikace.
-
-Jako první byl zvolen implementačně nenáročný K-NN klasifikátor. K-NN je neparametrická metoda využívaná pro klasifikaci a regresi. Spočívá ve vyhledávání k nejbližších sousedů v prostoru příznaků. K-NN potřebuje pro svou funkci definovat funkci vzdálenosti. Existuje řada metrik jak vzdálenost měřit. Mezi takové metriky patří např. Minkowského metrika také uváděná jako $L_{k}$ norma. Jejími podmnožiny pak tvoří např. Manhattanská či Eukleidovská vzdálenost \cite{book:pattern_class}.
+K-nejbližších sousedů (K-NN) je neparametrická metoda využívaná pro klasifikaci a regresi. Spočívá ve vyhledávání k nejbližších sousedů v prostoru příznaků. K-NN potřebuje pro svou funkci definovat funkci vzdálenosti. Existuje řada metrik jak vzdálenost měřit. Mezi takové metriky patří např. Minkowského metrika také uváděná jako $L_{k}$ norma. Její podmnožiny tvoří např. Manhattanská či Eukleidovská vzdálenost \cite{book:pattern_class}.
 
 Práce využívá pro měření vzdálenosti eukleidovský metriku na vektor o dvou příznacích. Prvním příznakem je plocha částice a druhým tvarová podobnost.
 
-Tvarovou podobnost částice porovnáváme na základě Hu-momentů\citep{Hu1962}. Jedná se o momenty pomocí nichž dokážeme tvar identifikovat. Výsledkem je deskriptor invariantní vůči translaci, rotaci z změně měřítka. Moment tvaru v binárním obrázku o rozměrech M x N je popsán jako:
+Tvarovou podobnost částice porovnáváme na základě Hu-momentů\citep{art:hu_moments}. Jedná se o momenty pomocí nichž dokážeme tvar identifikovat. Výsledkem je deskriptor invariantní vůči translaci, rotaci z změně měřítka. Moment tvaru v binárním obrázku o rozměrech M x N je popsán jako:
 \begin{equation}
 u_{pq} = \sum^{N-1}_{j=0}\sum^{M-1}_{i=0} i^p j^q f(i,j)
 \label{eq:moment}
@@ -530,6 +553,7 @@ m_7 = (3u_{21} - u_{03})(u_{30} + u_{12}) ((u_{30} + u_{12})^2 - 3(u_{21} + u_{0
 Podobnost jednoho tvaru s druhým pak vypočítáme jako:
 \begin{equation}
 s(A,B) = \sum_{i=1\cdots 7}\vert m_i^A - m_i^B\vert
+\label{eq:shape_similarity}
 \end{equation}
 Kde $s(A,B)$ je podobnost tvarů A a B, $m_i$ je jeden ze sedmi Hu-momentů z rovnic \ref{eq:hu1}-\ref{eq:hu7}. Výsledkem je hodnota rostoucí od $0$ a platí, že čím větší menší podobnost tím větší hodnota.
 
@@ -543,31 +567,66 @@ Kde $min_i = \min\limits_{i=1\cdots k}(x_{ij})$ a $max_i = \min\limits_{j=1\cdot
 
 Normalizace se provádí vždy při přidání nové částice mezi trénovací data. V případě, že příznaky nově přidané částice posouvají $min_i$ nebo $max_i$ jsou přeškálovány i ostatní hodnoty podle nového rozpětí.
 
-Pro výpočet podobnosti tvarů byla využita funkce \textit{matchShapes} z OpenCV\cite{opencv}.
+Originální prostor, ve kterém modely jednotlivých částic existují je více-dimenzionální. Z tohoto důvodu je originální prostor špatně zobrazitelný. Můžeme ale zobrazit transformovaný prostor příznaků pro jednotlivé částice viz. grafy na obr.~\ref{fig:feature_space_tycinka}, ~\ref{fig:feature_space_kolac},~\ref{fig:feature_space_kolecko}.
 
-Prezentovaná metoda volby příznaků je náchylná na uživatelskou chybu špatného zařazení při učení.
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.3\textheight]{figures/feature_space_tycinka.png}
+	\caption{Prostor příznaků pro částici, která by byla klasifikována jako typ tyčinka. Osa x: rozdíl ve velikostech částic. Osa y: tvarová podobnost. }
+	\label{fig:feature_space_tycinka}
+\end{figure}
+~
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.3\textheight]{figures/feature_space_kolac.png}
+	
+	\caption{Prostor příznaků pro částici, která by byla klasifikována jako typ tyčinka. Osa x: rozdíl ve velikostech částic. Osa y: tvarová podobnost.}
+	\label{fig:feature_space_kolac}
+\end{figure}
+~
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.3\textheight]{figures/feature_space_kolecko.png}
+	\caption{Prostor příznaků pro částici, která by byla klasifikována jako typ kolečko. Osa x: rozdíl ve velikostech částic. Osa y: tvarová podobnost.}
+	\label{fig:feature_space_kolecko}
+\end{figure}
 
+
+Souřadnice $x_i$ v transformovaném prostoru vypočítáme jako:
+\begin{equation}
+x_i = \vert S - S_i \vert
+\end{equation}
+Kde $i=1 \cdots N$ ($N$ udává velikost trénovací množiny), $S$ plochu testované částice, $S_i$ plochu trénovací částice $i$.
+
+Souřadnici $y_i$ pak udává tvarovou podobnost mezi testovanou částicí a porovnávanou trénovací částicí viz rovnice~\ref{eq:shape_similarity}.
+
+Z grafů je pozorovatelné, že jednotlivé typy částic jsou od sebe výrazně odděleny. Na tomto základě byla vybrána metoda K-NN.
+
+Pro výpočet podobnosti tvarů byla využita funkce \textit{matchShapes} z OpenCV\cite{opencv_library}.
+
+\FloatBarrier
 \section{Výsledky klasifikace}
 
 \subsection{Vstupní data}
-Trénování a vyhodnocení výsledků probíhalo na datech snímcích pocházejících z UMG. Ze snímků které jsou k dispozici je zvoleno 7 mikroskopických snímků obsahujících variující tvary nanočástic. Výstupy klasifikačního algoritmu jsou prezentovány pomocí barevného značení, kde oražová barva značí částici typu kolečko, červená částici typu tyčinka a žlutozelená typ koláč. 
+Trénování a vyhodnocení výsledků probíhalo na datech snímcích pocházejících z UMG. K dispozici je 7 mikroskopických snímků obsahujících variující tvary nanočástic. Výstupy klasifikačního algoritmu jsou prezentovány pomocí barevného značení, kde oražová barva značí částici typu kolečko, červená částici typu tyčinka a žlutozelená typ koláč. 
 
 Výstup automatické klasifikace je porovnáván vůči výstupu jak by částice klasifikoval laborant.
 
-Vstupní trénovací množina je zobrazena na obr. \ref{fig:class_input}. Zvolený algoritmus
+\begin{figure}[hp]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figures/multi5_klasifikace.png}
+	\caption{Množina trénovacích dat.}
+	\label{fig:class_input}
+\end{figure}
 
-Nastavení parametrů pro adaptivní prahování:
+Vstupní trénovací množina je zobrazena na obr.~\ref{fig:class_input}.
+
+Nastavení parametrů:
 \begin{itemize}
 	\item Velikost okna: 51
 	\item C: 21
+	\item K: 5 
 \end{itemize}
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=\textwidth]{figures/multi5_klasifikace.png}
-	\label{fig:class_input}
-	\caption{Množina trénovacích dat.}
-\end{figure}
 
 \newpage
 \FloatBarrier
@@ -599,13 +658,14 @@ V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzor
 \label{tab:classresult1}
 \end{table}
 
+\newpage
 \FloatBarrier
 \subsection{Vzorek 2}
 V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzorek 2.
 \begin{figure}[h!]
 \center
 \includegraphics[width=\textwidth]{figures/multi2_klasifikace.png}
-\label{fig:class1}
+\label{fig:class2}
 \caption{Výsledek klasifikace částic pro vzorek 2.}
 \end{figure}
 
@@ -625,6 +685,7 @@ V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzor
 \label{tab:classresult2}
 \end{table}
 
+\newpage
 \FloatBarrier
 \subsection{Vzorek 3}
 V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzorek 3.
@@ -632,7 +693,7 @@ V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzor
 \begin{figure}[h]
 \center
 \includegraphics[width=\textwidth]{figures/multi4_klasifikace.png}
-\label{fig:class1}
+\label{fig:class3}
 \caption{Výsledek klasifikace částic pro vzorek 3.}
 \end{figure}
 
@@ -652,6 +713,7 @@ V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzor
 \label{tab:classresult3}
 \end{table}
 
+\newpage
 \FloatBarrier
 \subsection{Vzorek 4}
 V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzorek 4.
@@ -659,7 +721,7 @@ V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzor
 \begin{figure}[hb]
 \center
 \includegraphics[width=\textwidth]{figures/multi6_klasifikace.png}
-\label{fig:class1}
+\label{fig:class4}
 \caption{Vyhodnocení klasifikace částic pro vzorek 4.}
 \end{figure}
 
@@ -679,6 +741,7 @@ V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzor
 \label{tab:classresult5}
 \end{table}
 
+\newpage
 \FloatBarrier
 \subsection{Vzorek 5}
 V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzorek 5.
@@ -686,7 +749,7 @@ V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzor
 \begin{figure}[h]
 \center
 \includegraphics[width=\textwidth]{figures/multi7_klasifikace.png}
-\label{fig:class1}
+\label{fig:class5}
 \caption{Výsledek klasifikace částic pro vzorek 5.}
 \end{figure}
 
@@ -706,6 +769,7 @@ V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzor
 \label{tab:classresult6}
 \end{table}
 
+\newpage
 \FloatBarrier
 \subsection{Vzorek 6}
 V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzorek 6.
@@ -713,7 +777,7 @@ V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzor
 \begin{figure}[h]
 \center
 \includegraphics[width=\textwidth]{figures/multi8_klasifikace.png}
-\label{fig:class1}
+\label{fig:class6}
 \caption{Výsledek klasifikace částic pro vzorek 6.}
 \end{figure}
 
@@ -733,6 +797,7 @@ V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzor
 \label{tab:classresult7}
 \end{table}
 
+\newpage
 \FloatBarrier
 \subsection{Celkový přehled}
 V této části se nachází shrnutí výsledků pro všechny klasifikované vzorky.
@@ -753,7 +818,8 @@ Celkem                                              & 2626                      
 \label{tab:classresult8}
 \end{table}
 
-\chapter{Návrh aplikace}
+\chapter{Návrh a realizace aplikace}
+Tato kapitola popisuje návrh aplikace.
 
 \section{Způsob práce s daty}
 Zpracování mikroskopických snímků v laboratoři probíhá typicky po dávkách. Za tímto účelem bylo navrženo rozhraní  které umožňuje seskupovat snímky do skupin. Tyto skupiny nazýváme v aplikaci \textit{Projekty}. Projekt je stromová struktura složek obsahující soubory se snímky a uloženými daty. Více o projektech je uvedeno v sekci o uchování dat \ref{sec:uchovani_dat}.
@@ -795,7 +861,7 @@ Hlavní části okna aplikace se skládají z následujících částí:
 	Panel nástrojů je umístěn v horní části okna aplikace. Obsahuje kontrolní prvky pro manipulaci s daty v aplikaci.
 \end{description}
 \subsection{Editační panel}
-V editačním panelu je zobrazen buď \textit{editor snímků} nebo \textit{panel analýzy}.
+V editačním panelu je zobrazen buď \textit{editor snímků} nebo \textit{panel analýzy}. 
 
 \subsubsection{Editor snímků}
 Editor snímků je hlavní a nejdůležitější součást aplikace. Slouží primárně k práci obrazovými daty jako je detekce a klasifikace. Hlavní funkcí panelu je zobrazování obrazových dat a nanočástic.
@@ -829,7 +895,9 @@ Dendrogram je binární strom znázorňující hierarchické shlukování. V apl
 
 Dendrogramem ve možné vést řezy danou vzdáleností, které rozdělí dendrogram na dílčí shluky. V tomto rozdělení je každý shluk barevně oddělen. Výsledek vzniklého rozdělení má pak uživatel možnost sledovat v původním snímku v NP, kde každá NP má barvu podle příslušnosti do shluku.  
 
-Implementace konstrukce dendrogramu vychází z \cite{on:shlukovani_java}. Původní řešení je modifikováno pro účely aplikace. Byla přidána funkcionalita tvorby řezů v histogramu.
+Implementace konstrukce dendrogramu vychází z \cite{on:shlukovani_java}. Původní řešení je modifikováno pro účely aplikace. Byla přidána funkcionalita tvorby řezů v histogramu a upravena vizualizace histogramu.
+
+Ukázka pa
 
 \subsection{Přehled projektů}
 \begin{figure}[h]
@@ -842,33 +910,47 @@ Přehled otevřených projektů je zobrazen na panelu přehledu projektů. Panel
 
 \subsection{Přehledu klasifikátorů}
 \begin{figure}[h]
-\centering
-\includegraphics[scale=0.5]{figures/app_class_overview.png}
-\caption{Ukázka panelu s přehledem klasifikátorů.}
+	\centering
+	\includegraphics[scale=0.5]{figures/app_class_overview.png}
+	\caption{Ukázka panelu s přehledem klasifikátorů.}
 \end{figure}
 
 Panel klasifikátoru je standardně součástí prohlížecího panelu. Jeho funkcí je zobrazovat vytvořené klasifikátory, vytvářet klasifikátory nové a poskytovat uživateli možnost s klasifikátorem manipulovat.
 
 Klasifikátoru lze vytvořit jednotlivé třídy pro zařazení částic. Každou třídu je možné pojmenovat a přiřadit k ní barvu. Přiřazená barva klasifikátoru ovlivňuje jakou barvou jsou částice, přiřazené do dané třídy, zobrazovány v \textit{editoru obrázků}.
 
-Klasifikátor je možné 
+Klasifikátor je možné exportovat, importovat a tím přenášet mezi jednotlivými projekty.
 
 \subsection{Inspekční panel}
 Inspekční panel obsahuje v základní verzi dva panely. Panel s informacemi o snímku a inspekční panel.
 
-Panel s \textit{informacemi o snímku} zobrazuje uživateli obecné informace o snímku jako je jeho rozlišení, absolutní počet detekovaných částic, počet částic v jednotlivých třídách atd.
+Panel s \textbf{informacemi o snímku} zobrazuje uživateli obecné informace o snímku jako je jeho rozlišení, absolutní počet detekovaných částic, počet částic v jednotlivých třídách atd. Ukázka panelu je zobrazena na obr.~\ref{fig:app_image_info}.
 
-Inspekční panel zobrazuje informace o částicích které má uživatel vybrané. Takovou informací je např. počet vybraných částic, příslušnost částic do tříd, těžiště atd. Vybrané částice je pak možné exportovat do formátu CSV k další analýze.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{figures/app_image_info.png}
+	\caption{Ukázka panelu s informacemi o snímku.}
+	\label{fig:app_image_info}
+\end{figure}
+
+\textbf{Inspekční panel} zobrazuje informace o částicích které má uživatel vybrané. Takovou informací je např. počet vybraných částic, příslušnost částic do tříd, těžiště atd. Vybrané částice je pak možné exportovat do textového formátu CSV k další analýze. Ukázku panelu je možné pozorovat na obr.~\ref{fig:app_inspector}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{figures/app_inspector.png}
+	\caption{Ukázka panelu s informacemi o snímku.}
+	\label{fig:app_inspector}
+\end{figure}
 
 \section{Uchování dat}
 \label{sec:uchovani_dat}
-Pro uchovávání dat je v aplikaci navržena struktura složek a souborů nazvaná \textit{projekt}. Struktura projektu se sestává ze tří složek, souboru \textit{pattern.proj} a souborů s daty viz obr. \ref{fig:project_structure}.
+Pro uchovávání dat je v aplikaci navržena struktura složek a souborů nazvaná \textit{projekt}. Struktura projektu se sestává ze tří složek, souboru \textit{pattern.proj} a souborů s daty viz obr.~\ref{fig:project_structure}.
 
 \begin{figure}
-\centering
-\includegraphics[scale=1]{figures/app_project_structure.png}
-\caption{Příklad souborové a složkové struktury projektu.}
-\label{fig:project_structure}
+	\centering
+	\includegraphics[scale=1]{figures/app_project_structure.png}
+	\caption{Příklad souborové a složkové struktury projektu.}
+	\label{fig:project_structure}
 \end{figure}
 
 Aplikace umožňuje uchovávat:
@@ -945,19 +1027,66 @@ Data pro klasifikátor se ukládají přímo do souboru \textit{pattern.proj}, k
 }
 \end{lstlisting}
 
-\chapter{Realizace}
-Tato kapitola popisuje jak je aplikace realizována.
+\section{Realizace aplikace}
+Celá aplikace je realizována v prostředí prostřednictvím programovacího jazyka Java pomocí frameworku NetBeans Platform.
 
-\chapter{Závěr}
-\section{Diskuze}
+\subsection{Vývojové prostředí}
+Netbeans Platform je programové prostředí patřící do skupiny Rich Client Platform (RCP). RCP je soubor programátorských nástrojů zjednodušující vývoj aplikace. Většina RCP poskytuje následující funkce:
+\begin{itemize}
+	\item manažer životního cyklu aplikace
+	\item bundling framework
+	\item pokročilé nástroje pro tvorbu uživatelského rozhraní
+	\item nástroje pro internacionalizaci
+	\item 
+\end{itemize}
+
+Příklady takových frameworků pro jazyk Java jsou Eclipse RCP, Netbeans Platform a Spring Framework.
+
+\subsubsection{Netbeans Platform}
+Pro vývoj aplikace byla zvolena NetBeans platform na základě dřívějších zkušeností autora. NetBeans Platform nabízí ucelenou sadu komponent, podpůrných tříd a propracovanou modulární architekturu s konkrétními promyšlenými API, které výrazně urychlí vývoj a správu programů.
+
+\subsection{Podpůrné knihovny}
+V aplikace používá následující dostupné opensource knihovny:
+\begin{description}
+	\item[OpenCV] Knihovna s funkcemi pro zpracování obrazu, počítačové vidění a strojové učení.
+	\item[Bio-formats] Knihovna podporující načítání snímků v rozličných formátech.
+	\item[hierarchical-clustering-java] Knihovna s implementací hierarchického shlukování.
+	\item[japura-gui] Knihovna s dodatečnými komponentami uživatelského rozhraní.
+	\item[gson] Knihovna zjednodušující serializaci a de-serializaci objektů ve formátu JSON.
+\end{description}
+
+
+\chapter{Diskuze}
+V této kapitole jsou rozebrány výsledky detekce a klasifikace.
+
+Navržená metoda detekce částic má problémy při separování částic, které jsou příliš blízko u sebe. Takové částice se vyznačují nízkou nebo téměř žádnou magnitudou gradientu v místě přechodu mezi částicemi.
+
+Tento problém jsem se pokoušel velice aktivně řešit, ale žádné zvolené řešení nevedlo k ideální segmentaci. Proběhl pokus o zpřesnění segmentace pomocí metody watershed. Problémem watershedu je, že potřebuje znát počáteční místa ve snímku, odkud může růst. Právě nalezení těchto míst je klíčovou součástí úspěšné segmentace pomocí watershed algoritmu.
+
+Vyzkoušel jsem hledání těchto míst pomocí distanční transformace i iterativní eroze na nekonvexní objekty. Konvexita se projevila být dobrým testem pro špatně nebo dobře segmentované částice. Ty špatně segmentované jsou nekonvexní.
+
+Takto aplikovaný watershed dokázal oddělit některé částice lépe. Avšak na jiných případech vykazoval chybu v podobě přesegmentovaní a negativně ovlivňoval výsledky celé segmentace a následně klasifikace. Proto nakonec jako výsledné řešení bylo ponecháno "pouze primitivní" adaptivní prahování aby nedocházelo ke zbytečné zátěži programových a hardwarových komponent. S tím že případná oprava bude ponechána na interaktivním zásahu uživatele.
+
+Navržený klasifikátor umožňuje klasifikovat data a jeho přesnost byla uznána laboranty jako dostačující. Velikým přínosem je, že klasifikátor dokáže úspěšně klasifikovat částice typu kolečko od zbytku. Jelikož částic typu kolečko se ve snímcích nachází nejvíce a problematicky se trefují pomocí myši, jejich přeznačování by stálo značné úsilí. Takto laborant může přeznačit okolo 10 špatně klasifikovaných částic, které se dobře trefují myší. Tento úkon pak zabírá minimální 
+
 Zhodnocení výsledků detekce. Pořád to není úplně ono navržené metody stále selhávají např. na obr. Důvodem je malý nejčastěji kontrast částic s okolím. Nebo jejich těsná blízkost\\
 Zhodnocení výsledků klasifikace. Byl ozkoušeno testování pomocí konvexity ale nepodařilo se dotáhnout do konce.
 
+Implementovaná aplikace byla otestována a funguje na operačních systémech Windows 7/8.1 a Mac OS X 10.9.
+
+Aplikace nyní míří do testovacího provozu, ve kterém se prověří její skutečná funkčnost. Aplikaci chci dále ladit a rozvíjet jako opensource projekt.
+
+\chapter{Závěr}
 \section{Shrnutí práce}
-Čeho jsem dosáhl.
-Detekce je taková a taková.
-Klasifikátor dobře klasifikuje malé částice. Kterých je v obrázcích z TEM většinové množství.\\
-Poskytl jsem metody pro analýzu dat pomocí hierarchického shlukování.
+Diplomová práce se zabývá problematikou automatizované analýzy nanočástic v mikroskopických snímcích. Je rozebrána důležitost automatizované analýzy nanočástic. Následně jsou uvedeny základní požadavky na program schopný takovou analýzu provádět. Je zjištěno že pro úspěšnou analýzu nanočástic v mikroskopických snímcích je potřeba částice nejprve správně detekovat a následně klasifikovat.
+
+Pro účely detekce jsou nejprve algoritmy které umožňují detekci nanočástic v mikroskopických snímcích. Na základě analýzy je vybrán zvolený způsob detekce nanočástic. Zvolený algoritmus detekce využívá adaptivního prahování a morfologických operací. Algoritmus byl implementován v jazyce Java za využití knihovny OpenCV. Výstupy detekčního algoritmu jsou analyzovány a vyhodnoceny na reálných testovacích datech. Úspěšnost detekce obecně nejde pod 90\%. Zvolený algoritmus má problémy při detekci částic, které se překrývají nebo jsou blízko u sebe.
+
+Dále jsou analyzovány způsoby klasifikace nanočástic v mikroskopických snímcích. Na základě analýzy je vybrán vhodný klasifikační algoritmus. Jako klasifikační algoritmus bylo vybrán algoritmus k-nejbližších sousedů. Jsou uvedeny výsledky klasifikace za použití K-NN na reálných testovacích datech pocházejících z provozu UMG. Úspěšnost klasifikace pomocí K-NN nejde pod 80\%.
+
+Detekční a klasifikační algoritmus je součástí implementovaného programu, který umožňuje automatizovanou detekci, klasifikaci a analýzu nanočástic. Program poskytuje pro analýzu nanočástic rozličné inspeční nástroje jako je shluková analýza pomocí dendrogramu a další. Program je naimplementován v programovacím jazyce jazyce Java za využití frameworku NetBeans Platform.
+
+Výše zmíněné postupy pak vedou k celkovému urychlení procesu analýzy snímků.
 
 \section{Další směřování}
 Aplikace nyní míří do testovacího provozu na UMG, kde bude vyhodnocen její přínos. Další možný vývoj na aplikaci se bude skládat z vylepšování uživatelského rozhraní a doplnění o další funkcionalitu, která vyplyne z testovacího provozu.
@@ -1000,5 +1129,14 @@ V této kapitole naleznete obsah CD přiloženého k této diplomové práci.
 		\item palasjir\_2015dip.pdf - text diplomové práce ve formátu PDF
 	\end{itemize} 
 \end{itemize}
+
+\chapter{Snímky obrazovky}
+\label{apend:screens}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1]{figures/app_screen_selection.png}
+\end{figure}
+
 
 \end{document}
