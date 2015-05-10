@@ -134,6 +134,27 @@ unicode=true,
 \let\oldUrl\url
 \renewcommand\url[1]{<\texttt{\oldUrl{#1}}>}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\declaration}[1]{
+\cleardoublepage
+\vspace*{\fill}
+\noindent
+{\huge \textbf{%
+\iflanguage{czech}{Prohlášení}{Declaration}%
+}}
+\vspace{3ex}\par
+\noindent
+\iflanguage{czech}{%
+Prohlašuji, že jsem předloženou práci vypracoval samostatně a že jsem uvedl veškeré použité informační zdroje v souladu s Metodickým pokynem o dodržování etických principů při přípravě vysokoškolských závěrečných prací.
+}{%
+\noindent
+I hereby declare that I have completed this thesis independently and that I have listed all the literature and publications used.\\
+I have no objection to usage of this work in compliance with the act \S 60 ZÃ¡kon Ä.~121/2000Sb. (copyright law), and with the rights connected with the copyright act including the changes in the act.%
+}
+\\[15mm]
+#1 \hfill \hbox to 70mm{\tiny\dotfill}
+}
+
 
 
 
@@ -213,7 +234,7 @@ unicode=true,
 
 \acknowledgements
 \noindent
-Na tomto místě bych rád poděkoval mamince za vaření obědů a večeří během krušných hodin psaní.
+Na tomto místě bych rád poděkoval mamince za vaření obědů a večeří během krušných hodin psaní. Rád bych poděkoval svému vedoucímu za dostatek trpělivosti. A dále všem, kteří mě obdařují každý den úsměvem.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%   Prohlaseni / Declaration 
@@ -225,8 +246,9 @@ Na tomto místě bych rád poděkoval mamince za vaření obědů a večeří b�
  
 \abstractpage
 
-Abstrakt v angličtině.
+The aim of the thesis is to provide tool for atomatic analysis of nanoparticles in microscopy images. Main goal is to design and implement functional software which deals with automatic analysis of nanoparticles in microscopic images. Thesis provides analysis for the state-of-art image processing and machine-learning methods suitable to achieve the main goal. On the base of the analysis is designed and implemented an algorithm for automatic detection an clasification of nanoparticles. Implemented algorithms are supplemented with user iterface developed in NetBeans Platform.
 
+\noindent \textbf{klíčová slova:} nanoparticles, segmentation, classification, microscopy
 % Prace v cestine musi krome abstraktu v anglictine obsahovat i
 % abstrakt v cestine.
 \vglue60mm
@@ -235,9 +257,10 @@ Abstrakt v angličtině.
 \vskip 2.75\baselineskip
 
 \noindent
-TODO Ještě nějak lépe přeformulovat
+Tato práce se zabývá automatizací analýzy nanočástic v mikroskopických snímcích. Hlavním cílem je návrh a implementace software zameřeného na automatizovanou analýzu nanočástic v~mikroskopických snímcích. Práce se analyzuje současne metody zpracování obrazu a strojového učení využitelné pro automatickou detekci, klasifikaci a analýzu nanočástic v mikroskopických snímcích. Na základě provedené analýzy je navržen a implementován algoritmus pro automatickou detekci a klasifikaci částic. Implementované algoritmy jsou začlenněny do funkční aplikace, založené na platformě NetBeans, která poskytuje rozhraní k~další analýze.
 
-Tato práce si klade za cíl návrh a implementaci software zaměřeného na automatizovanou analýzu částic v mikroskopických snímcích. Práce se zabývá analýzou současných metod zpracování obrazu a strojového učení využitelnými pro automatizovanou detekci, klasifikaci a analýzu mikroskopických částic. Na jejím základě je navržen a implementován algoritmus pro automatizovanou detekci a klasifikaci částic. V rámci práce jsou navrženy a implementovány metody vizuální a interaktivní analýzu detekovaných a klasifikovaných částic.
+\noindent \textbf{klíčová slova:} nanočástice, segmentace, klasifikace, mikroskopie
+
 
 %******************************  Obsah / Table of Contents 
 \tableofcontents
@@ -274,26 +297,18 @@ Pro pozorování těchto procesů se využívají nano-částice (NP). NP jsou �
 
 NP mají velice malý rozměr na to aby se daly snímat pomocí světelné mikroskopie. Proto se k jejich pozorování používají biologické zobrazovací metody pracující ve velikém rozlišení. Mezi takové metody patří například transmisní elektronová mikroskopie (TEM), rastrovací elektronová mikroskopie (SEM) a atd.~\cite{np:ostrowski}~\cite{np:mayhew}~\cite{np:coloc}. Výsledkem těchto zobrazovacích metod je snímek nebo série snímků.
 
-Snímky jsou následně vědci či laboranty vyhodnocovány. Pracovníci UAKČR UMG uvedli, že postrádají kvalitní, specializovaný a přitom jednoduchý nástroj pro vyhodnocování snímků s nanočásticemi.
+Snímky jsou následně vědci či laboranty vyhodnocovány. Pracovníci Akademie věd České republiky na Ústavu Molekulární geneticky (UMG) uvedli, že postrádají kvalitní, specializovaný a přitom jednoduchý nástroj pro vyhodnocování snímků s nanočásticemi.
 
 Tato práce si klade za cíl vytvořit aplikaci pro vyhodnocování snímků. Práce klade důraz na vytvoření co největší úrovně automatizace v aplikaci. Tak aby došlo k celkovému zkvalitnění a zrychlení vyhodnocování jednotlivých snímků. Základem pro vyhodnocování snímků je lokalizace jednotlivých částic. Dále jejich úspěšná klasifikace do jednotlivých tříd (kategorií) podle typů NP. Následná expertní analýza laborantem.
 
 \section{Přehled}
-V první kapitole práce definuje požadavky na aplikaci a popisuje data s částicemi.
+Kapitole práce definuje požadavky na aplikaci a popisuje data s částicemi.
 
-Ve druhá kapitola se zabývá problémem detekce částic. Nejprve jsou rozebrány možné způsoby jak částice v obraze detekovat. Následně je popsán vybraný algoritmus pro jejich detekci. Nakonec jsou uvedeny výsledky detekce částic na vybraných snímcích.
+Kapitola \textit{analýza} se zabývá problémem detekce částic. Nejprve jsou rozebrány možné způsoby jak částice v obraze detekovat. Následně je popsán vybraný algoritmus pro jejich detekci. Nakonec jsou uvedeny výsledky detekce částic na vybraných snímcích.
 
-Třetí kapitola se zabývá problematikou klasifikace částic. Jsou zmíněny jednotlivé přístupy ke klasifikaci. Dále je popsán vybraný klasifikační algoritmus. Nakonec jsou uvedeny výsledky klasifikace částic na vybraných snímcích.
+Kapitola \textit{klasifikace} se zabývá problematikou klasifikace částic. Jsou zmíněny jednotlivé přístupy ke klasifikaci. Dále je popsán vybraný klasifikační algoritmus. Nakonec jsou uvedeny výsledky klasifikace částic na vybraných snímcích.
 
-Další kapitola popisuje návrh aplikace uživatelského rozhraní aplikace. Jsou rozebrány její jednotlivé části a jejich jednotlivé části.
-
-Následující kapitola uvádí jak je aplikace realizována.
-
-
- 
-
-
-
+Kapitola návrh a realizace popisuje co stálo za návrhem uživatelského rozhraní aplikace. Jsou detailně rozebrány jednotlivé části aplikace a jejich funkcionalita. Kapitola se také zabývá realizací aplikace a použitým software.
 
 % *****************************************************************************
 \chapter{Analýza}
@@ -324,7 +339,7 @@ Práce se zaměřuje na automatizaci nebo částečnou automatizaci bodů 3-5. T
 
 \section{Data}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[scale=0.3]{figures/data1.jpg}
 \caption[Příklad vyhodnocovaného snímku.]{Příklad vyhodnocovaného snímku. Červené šipky ukazují různé tvary vyhodnocovaných NP. Tvar A: Koláč. Tvar B: Tyčinka. Tvar C: Kolečko. Částice E a D demonstrují možné rozdíly v jasech částic. Region G zobrazuje příklad překryvu částic. Region F zobrazuje příklad shlukování částic.}
@@ -337,15 +352,15 @@ Aplikace se zabývá vyhodnocováním NP obsažených ve snímcích jako na obr.
 
 Snímané vzorky jsou v mikroskopu nerovnoměrně osvětleny. To se projevuje na nerovnoměrném rozložení jasu v obrázku. Viz. levý horní roh a pravý horní roh na obr.~\ref{fig:data_example}. Dalším negativním jevem, který znesnadňuje detekci je tendence NP tvořit shluky viz. region F na obr.~\ref{fig:data_example} a překrývat se viz. region G na obr.~\ref{fig:data_example}. Navíc ani částice nemají jednotnou úroveň jasu viz. částice E a D na obr.~\ref{fig:data_example}.
 
-Práce rozlišuje tři typy částic A, B, C viz. obr.~\ref{fig:data_example}. Pracovní názvy těchto částic jsou koláč (A), tyčinka (B) a kolečko (C). K rozlišení těchto částic uvažujeme informaci o tvaru a velikosti. Jednotlivé částice lze považovat za konvexní útvary \cite{art:np_convex}. NP mohou být v obrázku libovolně orientované.  V určitých částech snímku splývají s pozadím více viz. a v některých méně viz. Částice nemají výraznou texturu. Snímek typicky obsahuje 300 - 700 částic.
+Práce rozlišuje tři typy částic A, B, C viz. obr.~\ref{fig:data_example}. Pracovní názvy těchto částic jsou koláč (A), tyčinka (B) a kolečko (C). K rozlišení těchto částic uvažujeme informaci o tvaru a velikosti. Jednotlivé částice lze považovat za konvexní útvary \cite{art:np_convex}. NP mohou být v obrázku libovolně orientované.  V určitých částech snímku splývají s pozadím více viz částice D na obr.~\ref{fig:data_example} a v~některých méně viz částice E na obr.~\ref{fig:data_example}. Částice nemají výraznou texturu. Snímek typicky obsahuje 300--700 částic.
 
-Na základě provedené charakteristiky obrazu a částic je vybrán vhodný detekční a klasifikační algoritmus viz kapitola \ref{sec:detekce} a kapitola \ref{sec:klasifikace}.
+Na základě provedené charakteristiky obrazu a částic je vybrán vhodný detekční a klasifikační algoritmus viz kapitola~\ref{sec:detekce} a kapitola~\ref{sec:klasifikace}.
 
 %%% Detekce nanočástic %%%%%%%%%%%%%%
 
 \chapter{Detekce nanočástic}
 \label{sec:detekce}
-Tato kapitola se zabývá problematikou segmentace nanočástic z jednotlivých snímků.
+Tato kapitola se zabývá problematikou segmentace nanočástic z jednotlivých mikroskopických snímků.
 
 \subsection{Úvod do problematiky}
 
@@ -353,9 +368,9 @@ Cílem detekčního algoritmu je úspěšně nalézt jednotlivé částice v obr
 
 Pro úspěšnou detekci částic je nejprve potřeba jejich segmentace. Segmentace je proces při kterém jsou ze snímku odděleny jednotlivé objekty a části od pozadí. Jedná se často o nejsložitější a nejdůležitější krok při analýze obrazu.
 
-Navzdory důležitosti, existuje pouze limitované množství zdrojů o automatické segmentaci nanočástic využitelných pro náš případ. Všechny nalezené zdroje se zabývají převážně detekcí NP kruhovitého tvaru \cite{art:mcfarland}\cite{art:glotov}\cite{art:chen}. Na druhou stranu ale existuje rozsáhlý výzkum zabývající se segmentací biologických buněk. V následujícím textu je shrnuta literatura zabývající se segmentací biologických buněk. Tento směr výzkumu je přímo spjat s jedním z cílů této práce \cite{art:ultimate}.
+Navzdory důležitosti, existuje pouze limitované množství zdrojů o automatické segmentaci nanočástic využitelných pro náš případ. Všechny nalezené zdroje se~zabývají převážně detekcí NP kruhovitého tvaru \cite{art:mcfarland}\cite{art:glotov}\cite{art:chen}. Na druhou stranu ale existuje rozsáhlý výzkum zabývající sesegmentací biologických buněk. V následujícím textu je shrnuta literatura zabývající se segmentací biologických buněk. Tento směr výzkumu je přímo spjat s jedním z cílů této práce \cite{art:ultimate}.
 
-Velice často používanou metodou pro segmentaci buněk je je prahování založené na charakteristikách histogramu obrázku. Přehled prahovacích technik uvádí \cite{art:sahoo88}. Pro obdržení uspokojivého výsledku segmentace za pomoci prahování je ale zapotřebí pozadí obrázku s neměnnou intenzitou. Je také třeba pamatovat na to, že malá změna v úrovni prahu může mít negativní dopad na na další analýzu obrázku \cite{art:wahlby}.
+Velice často používanou metodou pro segmentaci buněk je prahování založené na charakteristikách histogramu obrázku. Přehled prahovacích technik uvádí \cite{art:sahoo88}. Pro obdržení uspokojivého výsledku segmentace za pomoci prahování je ale zapotřebí pozadí obrázku s neměnnou intenzitou. Je také třeba pamatovat na to, že malá změna v úrovni prahu může mít negativní dopad na na další analýzu obrázku \cite{art:wahlby}.
 
 \textbf{Adaptivní prahování} nebo také lokální automatické prahování může být řešení pro prahování obrázku ve kterém intezita pozadí kolísá. Tato metoda ale stále neřeší problémy spojené s segementací objektů které tvoří shluky. Prahování nemusí být finálním krokem v segmentačním procesu. Naopak často bývá využíván právě jako první krok před dalším zpracování např. pomocí morfologických operací \cite{book:imgproc_gonzalez} \cite{art:wahlby}.
 
@@ -363,13 +378,13 @@ Další hojně užívanou metodou pro segmentaci buněk je tzv.~\textbf{watershe
 
 \textbf{Graph-cut} metody jsou také aplikovány na segmentaci buněk. Metoda zkonstruuje graf z obrázku kde každý pixel odpovídá jednotlivým vrcholům grafu. Každý pár vrcholů je spojen se sousedními vrcholy hranou jejíž váha odpovídá podobnosti intenzit sousedních pixelů. Segmentace pak hledá normalizovaný minimální řez grafem \cite{art:grabcut1}. Avšak tento přístup špatně separuje překrývající se buňky, obzvláště pokud je jejich intenzita podobná. Existuje úprava která tento problém řeší, funguje však pouze na částice buňky kruhového tvaru \cite{art:ultimate}.
 
-Mezi další segmentační metody použivané při segmentaci buněk se řadí \textbf{aktivní kontury} \cite{art:active_contours1} \cite{art:active_contours2}. Aktivní kontury jsou originálně navržené k segmentaci jednoho objektu s komplikovaným tvarem. Avšak po úpravě vícefázový algorimus může být použit k segmentaci více nepřekrývajících se objektů. Článek \cite{art:ultimate} na základě dalších použití na segmentaci překrývajících se buněk nedoporučuje.
+Mezi další segmentační metody použivané při segmentaci buněk se řadí \textbf{aktivní kontury} \cite{art:active_contours1} \cite{art:active_contours2}. Aktivní kontury jsou originálně navržené k segmentaci jednoho objektu s komplikovaným tvarem. Avšak po úpravě vícefázový algorimus může být použit k segmentaci více nepřekrývajících se objektů. Článek \cite{art:ultimate} použití na segmentaci překrývajících se buněk nedoporučuje.
 
 \subsection{Popis použitého řešení}
 
 Na základě předchozí analýzy byla ozkoušena segmentace metodami prahování \textit{watershed} a adaptivního prahování.
 
-Adaptivní prahování překvapivě produkuje od začátku dobrou míru segmentace. Avšak nedokáže oddělit částice, které se dotýkají nebo překrývají. Proběhl pokus zpřesnit výsledky pomocí watershed algoritmu. Avšak výsledek ke zpřesnění výstupu segmentace nedošlo, protože nebyl nalezen korektní způsob umístění markerů. Bylo vyzkoušeno umístění na základě distanční transformace \cite{opencv:watertut} a na základě \textit{ultimátní eroze pro konvexní sety } \cite{art:ultimate}. Současné řešení se tedy ustálilo na níže popsaném řešení.
+Adaptivní prahování překvapivě produkuje od začátku dobrou míru segmentace. Avšak nedokáže oddělit částice, které se dotýkají nebo překrývají. Proběhl pokus zpřesnit výsledky pomocí watershed algoritmu. Avšak výsledek ke zpřesnění výstupu segmentace nedošlo, protože nebyl nalezen korektní způsob umístění markerů. Bylo vyzkoušeno umístění na základě distanční transformace \cite{opencv:watertut} a na základě \textit{ultimátní eroze pro konvexní sety } \cite{art:ultimate}. Mnou navržené řešení se tedy ustálilo na níže popsaném řešení.
 
 Snímky s NP obsahují malé množství šumu, proto je obrázek předzpracován mediánového filtru s oknem o velikosti $3x3$ pixely. 
 
@@ -395,7 +410,7 @@ V binarní obrázek, upraveným morfologickou operací jsou následně prostřed
 K detekci byla využita implementace adaptivní filtrace a algoritmu \cite{suzuki85} z OpenCV\cite{opencv_library}. Adaptivní filtrace využívá funkce \textit{adaptiveThresh} a algoritmus na vyhledávání obrysů pak funkci \textit{findContours}.
 
 \subsection{Výsledky segmentace}
-Segmentace a její vyhodnocení výsledků probíhalo na datech snímcích pocházejících z UMG. Ze snímků které jsou k dispozici je zvoleno 7 mikroskopických snímků obsahujících variující tvary částic.Ve vzorcích 1, 2, 7 se vyznačují malou mírou shlukování částic. Naopak ve vzorcích 3, 4, 5, 6 jsou částice poskládány blíže sobě a některé se překrývají.
+Segmentace a její vyhodnocení výsledků probíhalo na datech snímcích pocházejících z UMG. K dispozici je 7 mikroskopických snímků obsahujících variující tvary částic.Ve vzorcích 1, 2, 7 se vyznačují malou mírou shlukování částic. Naopak ve vzorcích 3, 4, 5, 6 jsou částice poskládány blíže sobě a některé se překrývají.
 
 Výstupy segmentace algoritmu jsou prezentovány pomocí barevného značení, kde kontura nalezené částice je zobrazena červeně.
 
@@ -453,20 +468,20 @@ Celkem & 98                & 2809      & 0.965    \\ \hline
 \label{sec:klasifikace}
 Tato kapitola se se zabývá problematikou klasifikace detekovaných částic. V úvodu kapitoly je rozvedena problematika klasifikace a uvedeny metody strojového učení, které je možné využít při řešení této problematiky. Následně je rozveden přístup pro klasifikaci částic do jednotlivých tříd A, B nebo C, použitý v aplikaci  V závěru kapitoly pak jsou uvedeny jednotlivé výsledky klasifikace pomocí zvoleného K-NN klasifikátoru.
 
-\subsection{Úvod do problematiky}
+\section{Úvod do problematiky}
 Klasifikace je jedním z nejčastějších problémů se kterými se člověk setkává. Klasifikační problém se objevuje vždy, když určitý objekt potřebuje být začleněn do předdefinované skupiny \cite{art:neural_networks}.
 
-Mezi metody, které řeší klasifikační problémy patří metody strojového učení. V biologii bylo strojové učení již aplikováno na řadu problému v oblastech vývoje léků \cite{art:machine1}, analýza sekvencí DNA \cite{art:machine2}, proteomika \cite{art:machine3} a další. Mimo biologii se strojové učení využívá např. pro rozpoznávání textu, obličejů atd. Metody strojového učení dělíme na dvě skupiny, učení bez učitele a učení s učitelem.
+Mezi metody, které řeší klasifikační problémy patří metody strojového učení. V~biologii bylo strojové učení již aplikováno na řadu problému v~oblastech vývoje léků \cite{art:machine1}, analýza sekvencí DNA \cite{art:machine2}, proteomika \cite{art:machine3} a další. Mimo biologii se strojové učení využívá např. pro rozpoznávání textu, obličejů atd. Metody strojového učení dělíme na dvě skupiny, u\textit{čení bez učitele} a \textit{učení s učitelem}.
 
-První skupinou jsou metody tzv. \textit{učení bez učitele}. Tyto metody se obvykle využívají při zkoumání dat o kterých máme málo informací nebo nedokážeme vytvořit trénovací metody. Cílem učení bez učitele je spojovat skupiny dat do shluků na základě měření podobnosti nebo usnadnění následného vytěžování dat redukcí jejich dimensionality.
+První skupinou jsou metody tzv. \textit{učení bez učitele}. Tyto metody se obvykle využívají při zkoumání významu dat o kterých máme málo informací nebo nedokážeme vytvořit trénovací metody. Cílem učení bez učitele je spojovat skupiny dat do shluků na základě měření podobnosti nebo usnadnění následného vytěžování dat redukcí jejich dimensionality.
 
-Druhou skupinu tvoří tvz. \textit{metody učení s učitelem}. V tomto přístupu, uživatelé generují, z celé sady dat, data trénovací pomocí anotace reprezentativních vzorků. Anotaci dat se rozumí přiřazení vzorku do skupiny. Na základě těchto trénovacích dat je poté algoritmus strojového učení schopen podle definovaných pravidel a postupů zařadit do jednotlivých tříd i dosud neznámé vzorky dat.
+Druhou skupinu tvoří tzv. \textit{metody učení s učitelem}. V tomto přístupu, uživatelé generují, z celé sady dat, data trénovací pomocí anotace reprezentativních vzorků. Anotaci dat se rozumí přiřazení vzorku do skupiny. Na základě těchto trénovacích dat je poté algoritmus strojového učení schopen podle definovaných pravidel a postupů zařadit do jednotlivých tříd i dosud neznámé vzorky dat.
 
-Protože jednotlivé částice jsou klasifikovány na základě anotací poskytnutých laborantem jsou nadále uvažovány pouze metody strojového učení s učitelem.
+Protože jednotlivé částice jsou klasifikovány na základě anotací poskytnutých laborantem, jsou nadále uvažovány pouze metody strojového učení s učitelem.
 
-Jak bylo řečeno ve strojovém učení s učitelem, člověk, jako expert, nejprve definuje trénovací data anotováním vybraných příkladů z celkové množiny dat. V našem případě tvoří množinu všech dat detekované částice z jednoho či několika snímků. Trénovací množina je pak vybírána z této množiny anotováním jednotlivých částic. Ve strojovém učení proces trénování slouží k získání vnitřních parametrů klasifikačního modelu na jejichž základě jsou pak jednotlivé příklady klasifikovány.
+V případě strojového učení s učitelem definuje trénovací data člověk, který je považován za neomylného experta. Data jsou definována anotováním vybraných příkladů z~celkové množiny dat. V našem případě tvoří množinu všech dat detekované částice z~jednoho nebo několika snímků. Trénovací množina je pak vybírána z této množiny anotováním jednotlivých částic. Ve strojovém učení proces trénování slouží k~získání vnitřních parametrů klasifikačního modelu na jejichž základě jsou pak jednotlivé příklady klasifikovány.
 
-Mezi současné klasifikační algoritmy učení s učitelem patří např. rozhodovací stromy, Support Vector Machine (SVM), naivní Bayes, AdaBoost, neuronové sítě nebo algoritmus k-nejbližších sousedů (K-NN) a další ~\cite{book:pattern_class}.
+Mezi současné klasifikační algoritmy učení s~učitelem patří např. rozhodovací stromy, Support Vector Machine (SVM), naivní Bayes, AdaBoost, neuronové sítě nebo algoritmus k--nejbližších sousedů (K-NN) a další ~\cite{book:pattern_class}.
 
 Bayesovská rozhodovací metodika spoléhá na statistický pravděpodobnostní model. Podle tohoto modelu je pak určena jednotlivá příslušnost instancí do tříd \cite{art:neural_networks}.
 
@@ -477,7 +492,7 @@ Support vector machines (SVM) je metoda která se snaží nalézt dělící nadr
 Adaptive bootsing (AdaBoost) je založen na kombinaci několika slabých klasifikátorů k formování silného klasifikátoru iterativním přidáváním a vážením jednotlivých slabých klasifikátorů. Příkladem slabého klasifikátoru může být např. prahová funkce. Nevýhodou AdaBoostu je náchylnost na data s vysokým podílem šumu a tzv. \textit{outlierů}.
 
 Neuronové sítě je skupina algoritmů inspirovanými neuronovými spojeními v lidském mozku. Skládá se z umělých neuronů, jejichž inspirace pochází právě z biologických neuronů. Jednotlivé neurony jsou navzájem propojeny a navzájem si předávají signály, které se transformují pomocí přenosových funkcí. Neuron může mít mnoho vstupů ale pouze jeden výstup. Příkladem neuronu může být např. perceptron~\cite{art:neural_networks}. 
-
+\newpage
 Typické kroky při tvorbě klasifikátoru učení s učitelem jsou:
 \begin{itemize}
 \item Určení trénovací množiny dat
@@ -572,22 +587,21 @@ Originální prostor, ve kterém modely jednotlivých částic existují je víc
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.3\textheight]{figures/feature_space_tycinka.png}
-	\caption{Prostor příznaků pro částici, která by byla klasifikována jako typ tyčinka. Osa x: rozdíl ve velikostech částic. Osa y: tvarová podobnost. }
+	\caption[Prostor příznaků pro částici, která by byla klasifikována jako typ tyčinka.]{Prostor příznaků pro částici, která by byla klasifikována jako typ tyčinka. Osa x: rozdíl ve velikostech částic. Osa y: tvarová podobnost. }
 	\label{fig:feature_space_tycinka}
 \end{figure}
 ~
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.3\textheight]{figures/feature_space_kolac.png}
-	
-	\caption{Prostor příznaků pro částici, která by byla klasifikována jako typ tyčinka. Osa x: rozdíl ve velikostech částic. Osa y: tvarová podobnost.}
+	\caption[Prostor příznaků pro částici, která by byla klasifikována jako typ koláč.]{Prostor příznaků pro částici, která by byla klasifikována jako typ koláč. Osa x: rozdíl ve velikostech částic. Osa y: tvarová podobnost.}
 	\label{fig:feature_space_kolac}
 \end{figure}
 ~
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.3\textheight]{figures/feature_space_kolecko.png}
-	\caption{Prostor příznaků pro částici, která by byla klasifikována jako typ kolečko. Osa x: rozdíl ve velikostech částic. Osa y: tvarová podobnost.}
+	\caption[Prostor příznaků pro částici, která by byla klasifikována jako typ kolečko.]{Prostor příznaků pro částici, která by byla klasifikována jako typ kolečko. Osa x: rozdíl ve velikostech částic. Osa y: tvarová podobnost.}
 	\label{fig:feature_space_kolecko}
 \end{figure}
 
@@ -647,10 +661,9 @@ V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzor
 \hline
 \rowcolor[HTML]{9B9B9B} 
 \multicolumn{1}{|l|}{\cellcolor[HTML]{9B9B9B}Třída} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Dobře} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Špatně} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Celkem} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Přesnost} \\ \hline
-\multicolumn{1}{|l|}{-1}                            & \multicolumn{1}{l|}{0}                             & \multicolumn{1}{l|}{2}                               & \multicolumn{1}{l|}{2}                              & \multicolumn{1}{l|}{0,000}                            \\ \hline
-\multicolumn{1}{|l|}{0}                             & \multicolumn{1}{l|}{2}                             & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{2}                              & \multicolumn{1}{l|}{100,000}                          \\ \hline
-\multicolumn{1}{|l|}{1}                             & \multicolumn{1}{l|}{267}                           & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{267}                            & \multicolumn{1}{l|}{100,000}                          \\ \hline
-\multicolumn{1}{|l|}{2}                             & \multicolumn{1}{l|}{72}                            & \multicolumn{1}{l|}{11}                              & \multicolumn{1}{l|}{83}                             & \multicolumn{1}{l|}{86,747}                           \\ \hline
+\multicolumn{1}{|l|}{tyčinka}                             & \multicolumn{1}{l|}{2}                             & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{2}                              & \multicolumn{1}{l|}{100,000}                          \\ \hline
+\multicolumn{1}{|l|}{koláč}                             & \multicolumn{1}{l|}{267}                           & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{267}                            & \multicolumn{1}{l|}{100,000}                          \\ \hline
+\multicolumn{1}{|l|}{kolečko}                             & \multicolumn{1}{l|}{72}                            & \multicolumn{1}{l|}{11}                              & \multicolumn{1}{l|}{83}                             & \multicolumn{1}{l|}{86,747}                           \\ \hline
 \multicolumn{1}{|l|}{Celkem}                        & \multicolumn{1}{l|}{341}                           & \multicolumn{1}{l|}{11}                              & \multicolumn{1}{l|}{352}                            & \multicolumn{1}{l|}{96,875}                           \\ \hline
 \end{tabular}
 \end{center}
@@ -674,10 +687,9 @@ V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzor
 \begin{tabular}{lllll}
 \rowcolor[HTML]{9B9B9B} 
 \multicolumn{1}{|l|}{\cellcolor[HTML]{9B9B9B}Třída} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Dobře} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Špatně}  & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Celkem} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Přesnost} \\ \hline
-\multicolumn{1}{|l|}{}                              & \multicolumn{1}{l|}{0}                             & \multicolumn{1}{l|}{2}                               & \multicolumn{1}{l|}{2}                              & \multicolumn{1}{l|}{0,000}                            \\ \hline
-\multicolumn{1}{|l|}{}                              & \multicolumn{1}{l|}{2}                             & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{2}                              & \multicolumn{1}{l|}{100,000}                          \\ \hline
-\multicolumn{1}{|l|}{}                              & \multicolumn{1}{l|}{267}                           & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{267}                            & \multicolumn{1}{l|}{100,000}                          \\ \hline
-\multicolumn{1}{|l|}{}                              & \multicolumn{1}{l|}{72}                            & \multicolumn{1}{l|}{11}                              & \multicolumn{1}{l|}{83}                             & \multicolumn{1}{l|}{86,747}                           \\ \hline
+\multicolumn{1}{|l|}{tyčinka}                              & \multicolumn{1}{l|}{2}                             & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{2}                              & \multicolumn{1}{l|}{100,000}                          \\ \hline
+\multicolumn{1}{|l|}{koláč}                              & \multicolumn{1}{l|}{267}                           & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{267}                            & \multicolumn{1}{l|}{100,000}                          \\ \hline
+\multicolumn{1}{|l|}{kolčko}                              & \multicolumn{1}{l|}{72}                            & \multicolumn{1}{l|}{11}                              & \multicolumn{1}{l|}{83}                             & \multicolumn{1}{l|}{86,747}                           \\ \hline
 \multicolumn{1}{|l|}{Celkem}                        & \multicolumn{1}{l|}{341}                           & \multicolumn{1}{l|}{11}                              & \multicolumn{1}{l|}{352}                            & \multicolumn{1}{l|}{96,875}                           \\ \hline
 \end{tabular}
 \end{center}
@@ -702,10 +714,9 @@ V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzor
 \begin{tabular}{lllll}
 \rowcolor[HTML]{9B9B9B} 
 \multicolumn{1}{|l|}{\cellcolor[HTML]{9B9B9B}Třída} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Dobře} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Špatně}  & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Celkem} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Přesnost} \\ \hline
-\multicolumn{1}{|l|}{-1}                            & \multicolumn{1}{l|}{0}                             & \multicolumn{1}{l|}{5}                               & \multicolumn{1}{l|}{2}                              & \multicolumn{1}{l|}{0,000}                            \\ \hline
-\multicolumn{1}{|l|}{0}                             & \multicolumn{1}{l|}{20}                            & \multicolumn{1}{l|}{2}                               & \multicolumn{1}{l|}{22}                             & \multicolumn{1}{l|}{90,909}                           \\ \hline
-\multicolumn{1}{|l|}{1}                             & \multicolumn{1}{l|}{296}                           & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{296}                            & \multicolumn{1}{l|}{100,000}                          \\ \hline
-\multicolumn{1}{|l|}{2}                             & \multicolumn{1}{l|}{86}                            & \multicolumn{1}{l|}{10}                              & \multicolumn{1}{l|}{96}                             & \multicolumn{1}{l|}{89,583}                           \\ \hline
+\multicolumn{1}{|l|}{tyčinka}                             & \multicolumn{1}{l|}{20}                            & \multicolumn{1}{l|}{2}                               & \multicolumn{1}{l|}{22}                             & \multicolumn{1}{l|}{90,909}                           \\ \hline
+\multicolumn{1}{|l|}{koláč}                             & \multicolumn{1}{l|}{296}                           & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{296}                            & \multicolumn{1}{l|}{100,000}                          \\ \hline
+\multicolumn{1}{|l|}{kolečko}                             & \multicolumn{1}{l|}{86}                            & \multicolumn{1}{l|}{10}                              & \multicolumn{1}{l|}{96}                             & \multicolumn{1}{l|}{89,583}                           \\ \hline
 \multicolumn{1}{|l|}{Celkem}                        & \multicolumn{1}{l|}{402}                           & \multicolumn{1}{l|}{12}                              & \multicolumn{1}{l|}{414}                            & \multicolumn{1}{l|}{97,101}                           \\ \hline
 \end{tabular}
 \end{center}
@@ -730,10 +741,9 @@ V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzor
 \begin{tabular}{lllll}
 \rowcolor[HTML]{9B9B9B} 
 \multicolumn{1}{|l|}{\cellcolor[HTML]{9B9B9B}Třída} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Dobře} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Špatně}  & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Celkem} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Přesnost} \\ \hline
-\multicolumn{1}{|l|}{-1}                            & \multicolumn{1}{l|}{0}                             & \multicolumn{1}{l|}{3}                               & \multicolumn{1}{l|}{2}                              & \multicolumn{1}{l|}{0,000}                            \\ \hline
-\multicolumn{1}{|l|}{0}                             & \multicolumn{1}{l|}{17}                            & \multicolumn{1}{l|}{3}                               & \multicolumn{1}{l|}{20}                             & \multicolumn{1}{l|}{85,000}                           \\ \hline
-\multicolumn{1}{|l|}{1}                             & \multicolumn{1}{l|}{289}                           & \multicolumn{1}{l|}{2}                               & \multicolumn{1}{l|}{291}                            & \multicolumn{1}{l|}{99,313}                           \\ \hline
-\multicolumn{1}{|l|}{2}                             & \multicolumn{1}{l|}{93}                            & \multicolumn{1}{l|}{9}                               & \multicolumn{1}{l|}{102}                            & \multicolumn{1}{l|}{91,176}                           \\ \hline
+\multicolumn{1}{|l|}{tyčinka}                             & \multicolumn{1}{l|}{17}                            & \multicolumn{1}{l|}{3}                               & \multicolumn{1}{l|}{20}                             & \multicolumn{1}{l|}{85,000}                           \\ \hline
+\multicolumn{1}{|l|}{koláč}                             & \multicolumn{1}{l|}{289}                           & \multicolumn{1}{l|}{2}                               & \multicolumn{1}{l|}{291}                            & \multicolumn{1}{l|}{99,313}                           \\ \hline
+\multicolumn{1}{|l|}{kolečko}                             & \multicolumn{1}{l|}{93}                            & \multicolumn{1}{l|}{9}                               & \multicolumn{1}{l|}{102}                            & \multicolumn{1}{l|}{91,176}                           \\ \hline
 \multicolumn{1}{|l|}{Celkem}                        & \multicolumn{1}{l|}{399}                           & \multicolumn{1}{l|}{14}                              & \multicolumn{1}{l|}{413}                            & \multicolumn{1}{l|}{96,610}                           \\ \hline
 \end{tabular}
 \end{center}
@@ -758,10 +768,9 @@ V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzor
 \begin{tabular}{lllll}
 \rowcolor[HTML]{9B9B9B} 
 \multicolumn{1}{|l|}{\cellcolor[HTML]{9B9B9B}Třída} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Dobře} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Špatně}  & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Celkem} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Přesnost} \\ \hline
-\multicolumn{1}{|l|}{-1}                            & \multicolumn{1}{l|}{0}                             & \multicolumn{1}{l|}{3}                               & \multicolumn{1}{l|}{2}                              & \multicolumn{1}{l|}{0,000}                            \\ \hline
-\multicolumn{1}{|l|}{0}                             & \multicolumn{1}{l|}{4}                             & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{4}                              & \multicolumn{1}{l|}{100,000}                          \\ \hline
-\multicolumn{1}{|l|}{1}                             & \multicolumn{1}{l|}{307}                           & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{307}                            & \multicolumn{1}{l|}{100,000}                          \\ \hline
-\multicolumn{1}{|l|}{2}                             & \multicolumn{1}{l|}{85}                            & \multicolumn{1}{l|}{9}                               & \multicolumn{1}{l|}{94}                             & \multicolumn{1}{l|}{90,426}                           \\ \hline
+\multicolumn{1}{|l|}{tyčinka}                             & \multicolumn{1}{l|}{4}                             & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{4}                              & \multicolumn{1}{l|}{100,000}                          \\ \hline
+\multicolumn{1}{|l|}{koláč}                             & \multicolumn{1}{l|}{307}                           & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{307}                            & \multicolumn{1}{l|}{100,000}                          \\ \hline
+\multicolumn{1}{|l|}{kolečko}                             & \multicolumn{1}{l|}{85}                            & \multicolumn{1}{l|}{9}                               & \multicolumn{1}{l|}{94}                             & \multicolumn{1}{l|}{90,426}                           \\ \hline
 \multicolumn{1}{|l|}{Celkem}                        & \multicolumn{1}{l|}{396}                           & \multicolumn{1}{l|}{9}                               & \multicolumn{1}{l|}{405}                            & \multicolumn{1}{l|}{97,778}                           \\ \hline
 \end{tabular}
 \end{center}
@@ -786,10 +795,9 @@ V této části se nachází zjištěné hodnoty výsledků klasifikace pro vzor
 \begin{tabular}{lllll}
 \rowcolor[HTML]{9B9B9B} 
 \multicolumn{1}{|l|}{\cellcolor[HTML]{9B9B9B}Třída} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Dobře} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Špatně}  & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Celkem} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Přesnost} \\ \hline
-\multicolumn{1}{|l|}{-1}                            & \multicolumn{1}{l|}{0}                             & \multicolumn{1}{l|}{2}                               & \multicolumn{1}{l|}{2}                              & \multicolumn{1}{l|}{0,000}                            \\ \hline
-\multicolumn{1}{|l|}{0}                             & \multicolumn{1}{l|}{2}                             & \multicolumn{1}{l|}{1}                               & \multicolumn{1}{l|}{3}                              & \multicolumn{1}{l|}{66,667}                           \\ \hline
-\multicolumn{1}{|l|}{1}                             & \multicolumn{1}{l|}{254}                           & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{254}                            & \multicolumn{1}{l|}{100,000}                          \\ \hline
-\multicolumn{1}{|l|}{2}                             & \multicolumn{1}{l|}{74}                            & \multicolumn{1}{l|}{4}                               & \multicolumn{1}{l|}{78}                             & \multicolumn{1}{l|}{94,872}                           \\ \hline
+\multicolumn{1}{|l|}{tyčinka}                             & \multicolumn{1}{l|}{2}                             & \multicolumn{1}{l|}{1}                               & \multicolumn{1}{l|}{3}                              & \multicolumn{1}{l|}{66,667}                           \\ \hline
+\multicolumn{1}{|l|}{koláč}                             & \multicolumn{1}{l|}{254}                           & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{254}                            & \multicolumn{1}{l|}{100,000}                          \\ \hline
+\multicolumn{1}{|l|}{kolečko}                             & \multicolumn{1}{l|}{74}                            & \multicolumn{1}{l|}{4}                               & \multicolumn{1}{l|}{78}                             & \multicolumn{1}{l|}{94,872}                           \\ \hline
 \multicolumn{1}{|l|}{Celkem}                        & \multicolumn{1}{l|}{330}                           & \multicolumn{1}{l|}{5}                               & \multicolumn{1}{l|}{335}                            & \multicolumn{1}{l|}{98,507}                           \\ \hline
 \end{tabular}
 \end{center}
@@ -807,10 +815,9 @@ V této části se nachází shrnutí výsledků pro všechny klasifikované vzo
 \begin{tabular}{lllll}
 \rowcolor[HTML]{9B9B9B} 
 \multicolumn{1}{|l|}{\cellcolor[HTML]{9B9B9B}Třída} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Dobře} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Špatně}  & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Celkem} & \multicolumn{1}{l|}{\cellcolor[HTML]{9B9B9B}Přesnost} \\ \hline
-\multicolumn{1}{|l|}{-1}                            & \multicolumn{1}{l|}{0}                             & \multicolumn{1}{l|}{22}                              & \multicolumn{1}{l|}{14}                             & \multicolumn{1}{l|}{0,000}                            \\ \hline
-\multicolumn{1}{|l|}{0}                             & \multicolumn{1}{l|}{73}                            & \multicolumn{1}{l|}{12}                              & \multicolumn{1}{l|}{85}                             & \multicolumn{1}{l|}{85,882}                           \\ \hline
-\multicolumn{1}{|l|}{1}                             & \multicolumn{1}{l|}{1983}                          & \multicolumn{1}{l|}{2}                               & \multicolumn{1}{l|}{1985}                           & \multicolumn{1}{l|}{99,899}                           \\ \hline
-\multicolumn{1}{|l|}{2}                             & \multicolumn{1}{l|}{570}                           & \multicolumn{1}{l|}{64}                              & \multicolumn{1}{l|}{634}                            & \multicolumn{1}{l|}{89,905}                           \\ \hline
+\multicolumn{1}{|l|}{tyčinka}                             & \multicolumn{1}{l|}{73}                            & \multicolumn{1}{l|}{12}                              & \multicolumn{1}{l|}{85}                             & \multicolumn{1}{l|}{85,882}                           \\ \hline
+\multicolumn{1}{|l|}{koláč}                             & \multicolumn{1}{l|}{1983}                          & \multicolumn{1}{l|}{2}                               & \multicolumn{1}{l|}{1985}                           & \multicolumn{1}{l|}{99,899}                           \\ \hline
+\multicolumn{1}{|l|}{kolečko}                             & \multicolumn{1}{l|}{570}                           & \multicolumn{1}{l|}{64}                              & \multicolumn{1}{l|}{634}                            & \multicolumn{1}{l|}{89,905}                           \\ \hline
 Celkem                                              & 2626                                               & 100                                                  & 2718                                                & 96,615                                                \\ \hline
 \end{tabular}
 \end{center}
@@ -818,24 +825,27 @@ Celkem                                              & 2626                      
 \label{tab:classresult8}
 \end{table}
 
+
+% *************************************************************************************
 \chapter{Návrh a realizace aplikace}
-Tato kapitola popisuje návrh aplikace.
+
+Tato kapitola popisuje návrh uživatelského rozhraní aplikace framework NetBeans~\cite{sw:nb_platform}, na kterém je aplikace postavena postavena. Nakonec jsou uvedeny knihovny a zdroje třetích stran, které aplikace využívá.
 
 \section{Způsob práce s daty}
-Zpracování mikroskopických snímků v laboratoři probíhá typicky po dávkách. Za tímto účelem bylo navrženo rozhraní  které umožňuje seskupovat snímky do skupin. Tyto skupiny nazýváme v aplikaci \textit{Projekty}. Projekt je stromová struktura složek obsahující soubory se snímky a uloženými daty. Více o projektech je uvedeno v sekci o uchování dat \ref{sec:uchovani_dat}.
+Zpracování mikroskopických snímků v laboratoři probíhá typicky po dávkách. Za tímto účelem bylo navrženo rozhraní, které umožňuje seskupovat snímky do skupin. Tyto skupiny nazýváme v~aplikaci \textit{Projekty}. Projekt je stromová struktura složek obsahující soubory se snímky a uloženými daty. Více o~projektech je uvedeno v sekci o~uchování dat \ref{sec:uchovani_dat}.
 
 Typický způsob práce s aplikací je předpokládán následujícím způsobem:
 \begin{enumerate}
-\item Pořízení skupiny snímků.
-\item Vytvoření projektu a načtení skupiny obrázků.
-\item Detekce částic ve vybraném obrázku.
-\item Možná úprava parametrů detektoru při špatně provedené detekci a opětovná detekce
-\item Ruční označení vybraného počtu částic.
-\item Přiřazení označených částic klasifikátoru jako trénovací množinu.
-\item Klasifikace dosud neoznačených částic natrénovaným klasifikátorem.
-\item Oprava nebo trénovací množiny dat.
-\item Aplikace detekce a klasifikace na další snímky 
-\item Analýza snímků s částicemi.
+	\item Pořízení skupiny snímků.
+	\item Vytvoření projektu a načtení skupiny obrázků.
+	\item Detekce částic ve vybraném obrázku.
+	\item Možná úprava parametrů detektoru při špatně provedené detekci a opětovná detekce.
+	\item Ruční označení vybraného počtu částic.
+	\item Přiřazení označených částic klasifikátoru jako trénovací množinu.
+	\item Klasifikace dosud neoznačených částic natrénovaným klasifikátorem.
+	\item Oprava nebo trénovací množiny dat.
+	\item Aplikace detekce a klasifikace na další snímky 
+	\item Analýza snímků s~částicemi.
 \end{enumerate}
 
 \section{Uspořádání aplikace}
@@ -847,18 +857,18 @@ Typický způsob práce s aplikací je předpokládán následujícím způsobem
 \label{fig:app_overview}
 \end{figure}
 
-Na základě těchto požadavků bylo navrženo rozložení aplikace viz.~\ref{fig:app_overview}. 
+Na základě těchto požadavků bylo navrženo rozložení aplikace viz~\ref{fig:app_overview}. 
 
-Hlavní části okna aplikace se skládají z následujících částí:
+Hlavní části okna aplikace se skládají z~následujících částí:
 \begin{description}
 	\item[Sekce A - Hlavní editační panel] \hfill \\
-	Hlavní editační panel je standardně umístěn uprostřed aplikačního okna a zastává jeho největší část. Panel je určen k zobrazování hlavního obsahu aplikace jako jsou mikroskopické obrázky a analýzy. Jednotlivé položky je možné zobrazit v záložkách. 
+	Hlavní editační panel je standardně umístěn uprostřed aplikačního okna a zastává jeho největší část. Panel je určen k~zobrazování hlavního obsahu aplikace jako jsou mikroskopické obrázky a analýzy. Jednotlivé položky je možné zobrazit v záložkách. 
 	\item[Sekce B - Prohlížecí panel] \hfill \\
-	Prohlížecí panel je standardně umístěn v horní levé části aplikačního okna. Komponenty zobrazují jednotlivé projekty a klasifikátory.
+	Prohlížecí panel je standardně umístěn v~horní levé části aplikačního okna. Komponenty zobrazují jednotlivé projekty a klasifikátory.
 	\item[Sekce C - Inspekční panel] \hfill \\
-	Inspekční panel je standardně umístěn v dolní levé části hlavního okna. Slouží k zobrazování doplňkových informací o mikroskopickém obrázku nebo o datech v něm umístěných.
+	Inspekční panel je standardně umístěn v~dolní levé části hlavního okna. Slouží k~zobrazování doplňkových informací o~mikroskopickém obrázku nebo o~datech v~něm umístěných.
 	\item[Sekce D - Panel nástrojů] \hfill \\
-	Panel nástrojů je umístěn v horní části okna aplikace. Obsahuje kontrolní prvky pro manipulaci s daty v aplikaci.
+	Panel nástrojů je umístěn v~horní části okna aplikace. Obsahuje kontrolní prvky pro manipulaci s~daty v~aplikaci.
 \end{description}
 \subsection{Editační panel}
 V editačním panelu je zobrazen buď \textit{editor snímků} nebo \textit{panel analýzy}. 
@@ -873,11 +883,11 @@ Ten umožňuje práci ve třech režimech.
 \item tvoření
 \end{itemize}
 
-První režim \textit{výběr}, je určený k interaktivnímu výběru detekovaných částic. To umožňuje uživateli jak interaktivně zkoumat data tak opravit výsledky detekce.
+První režim \textbf{výběr}, je určený k interaktivnímu výběru detekovaných částic. To umožňuje uživateli jak interaktivně zkoumat data a případně opravit výsledky detekce.
 
-Druhý režim \textit{značení}, je určený k přiřazování částic do jednotlivých tříd. V tomto režimu uživatel buď poskytuje trénovací data pro klasifikátor, aplikuje klasifikátor na aktuálně zobrazené nanočástice nebo může upravovat výsledek klasifikace.
+Druhý režim \textbf{značení}, je určený k přiřazování částic do jednotlivých tříd. V tomto režimu uživatel buď poskytuje trénovací data pro klasifikátor, aplikuje klasifikátor na aktuálně zobrazené nanočástice nebo může upravovat výsledek klasifikace.
 
-Třetí režim \textit{tvoření} umožňuje manuální přidávání částic. Tento režim umožňuje umístit novou částici na libovolné místo v obraze.
+Třetí režim \textbf{tvoření} umožňuje manuální přidávání částic. Tento režim umožňuje umístit novou částici na libovolné místo v~obraze.
 
 Nedílnou součástí editace částic je jejich vizualizace. Vizualizace částic realizována přímo pomocí Java 2D Graphics. Jednotlivé částice jsou zobrazovány na obrazovém podkladě. Zobrazení lze přibližovat, oddalovat a volit různé režimy zobrazení částic.
 
@@ -897,7 +907,7 @@ Dendrogramem ve možné vést řezy danou vzdáleností, které rozdělí dendro
 
 Implementace konstrukce dendrogramu vychází z \cite{on:shlukovani_java}. Původní řešení je modifikováno pro účely aplikace. Byla přidána funkcionalita tvorby řezů v histogramu a upravena vizualizace histogramu.
 
-Ukázka pa
+Ukázku dendrogramu a analýzy pomocí dendrogramu je možné nalézt v příloze~\ref{apend:screens} jako obrázky 1 a 2.
 
 \subsection{Přehled projektů}
 \begin{figure}[h]
@@ -915,27 +925,27 @@ Přehled otevřených projektů je zobrazen na panelu přehledu projektů. Panel
 	\caption{Ukázka panelu s přehledem klasifikátorů.}
 \end{figure}
 
-Panel klasifikátoru je standardně součástí prohlížecího panelu. Jeho funkcí je zobrazovat vytvořené klasifikátory, vytvářet klasifikátory nové a poskytovat uživateli možnost s klasifikátorem manipulovat.
+Panel klasifikátoru je standardně součástí prohlížecího panelu. Jeho funkcí je zobrazovat vytvořené klasifikátory, vytvářet klasifikátory nové a poskytovat uživateli možnost s~klasifikátorem manipulovat.
 
 Klasifikátoru lze vytvořit jednotlivé třídy pro zařazení částic. Každou třídu je možné pojmenovat a přiřadit k ní barvu. Přiřazená barva klasifikátoru ovlivňuje jakou barvou jsou částice, přiřazené do dané třídy, zobrazovány v \textit{editoru obrázků}.
 
 Klasifikátor je možné exportovat, importovat a tím přenášet mezi jednotlivými projekty.
 
 \subsection{Inspekční panel}
-Inspekční panel obsahuje v základní verzi dva panely. Panel s informacemi o snímku a inspekční panel.
+Inspekční panel obsahuje v základní verzi dva panely. Panel s informacemi o~snímku a inspekční panel.
 
-Panel s \textbf{informacemi o snímku} zobrazuje uživateli obecné informace o snímku jako je jeho rozlišení, absolutní počet detekovaných částic, počet částic v jednotlivých třídách atd. Ukázka panelu je zobrazena na obr.~\ref{fig:app_image_info}.
+Panel s \textbf{informacemi o~snímku} zobrazuje uživateli obecné informace o snímku jako je jeho rozlišení, absolutní počet detekovaných částic, počet částic v~jednotlivých třídách atd. Ukázka panelu je zobrazena na obr.~\ref{fig:app_image_info}.
 
-\begin{figure}[h]
+\begin{figure}[hp]
 	\centering
 	\includegraphics[scale=0.5]{figures/app_image_info.png}
 	\caption{Ukázka panelu s informacemi o snímku.}
 	\label{fig:app_image_info}
 \end{figure}
 
-\textbf{Inspekční panel} zobrazuje informace o částicích které má uživatel vybrané. Takovou informací je např. počet vybraných částic, příslušnost částic do tříd, těžiště atd. Vybrané částice je pak možné exportovat do textového formátu CSV k další analýze. Ukázku panelu je možné pozorovat na obr.~\ref{fig:app_inspector}.
+\textbf{Inspekční panel} zobrazuje informace o částicích které má uživatel vybrané. Takovou informací je např. počet vybraných částic, příslušnost částic do tříd, těžiště atd. Vybrané částice je pak možné exportovat do textového formátu CSV k~další analýze. Ukázku panelu je možné pozorovat na obr.~\ref{fig:app_inspector}.
 
-\begin{figure}[h]
+\begin{figure}[hp]
 	\centering
 	\includegraphics[scale=0.5]{figures/app_inspector.png}
 	\caption{Ukázka panelu s informacemi o snímku.}
@@ -944,9 +954,9 @@ Panel s \textbf{informacemi o snímku} zobrazuje uživateli obecné informace o 
 
 \section{Uchování dat}
 \label{sec:uchovani_dat}
-Pro uchovávání dat je v aplikaci navržena struktura složek a souborů nazvaná \textit{projekt}. Struktura projektu se sestává ze tří složek, souboru \textit{pattern.proj} a souborů s daty viz obr.~\ref{fig:project_structure}.
+Pro uchovávání dat je v aplikaci navržena struktura složek a souborů nazvaná \textit{projekt}. Struktura projektu se sestává ze tří složek, souboru \textit{pattern.proj} a souborů s~daty viz obr.~\ref{fig:project_structure}.
 
-\begin{figure}
+\begin{figure}[hp]
 	\centering
 	\includegraphics[scale=1]{figures/app_project_structure.png}
 	\caption{Příklad souborové a složkové struktury projektu.}
@@ -959,8 +969,9 @@ Aplikace umožňuje uchovávat:
 \item informace o klasifikátoru projektu
 \end{itemize}
 
+\newpage
 \subsubsection{Ukládání dat snímků}
-Data pro jednotlivé snímky jsou uchovávány ve složce \textit{data} v souborech s příponou \textit{.pattern}. Název souboru s daty pak odpovídá názvu souboru snímku ke kterému data patří. Pro ukládání dat je využito formátu JSON \cite{json}. Příklad struktury ukládaného dokumentu je následující:
+Data pro jednotlivé snímky jsou uchovávány ve složce \textit{data} v souborech s~příponou \textit{.pattern}. Název souboru s daty pak odpovídá názvu souboru snímku, ke kterému data patří. Pro ukládání dat je využito formátu JSON \cite{json}. Příklad struktury ukládaného dokumentu je následující:
 \begin{lstlisting}[language=json,firstnumber=1]
 {
 	"name": "multi2",
@@ -993,9 +1004,9 @@ Data pro jednotlivé snímky jsou uchovávány ve složce \textit{data} v soubor
 }
 \end{lstlisting}
 
-
+\newpage
 \subsubsection{Ukládání dat klasifikátoru}
-Data pro klasifikátor se ukládají přímo do souboru \textit{pattern.proj}, který se nachází v kořenovém adresáři projektu. Příklad struktury ukládaných dat ve fromátu JSON
+Data pro klasifikátor se ukládají přímo do souboru \textit{pattern.proj}, který se nachází v kořenovém adresáři projektu. Příklad struktury ukládaných dat ve formátu JSON:
 \begin{lstlisting}[language=json,firstnumber=1]
 {
   "info": {
@@ -1028,22 +1039,22 @@ Data pro klasifikátor se ukládají přímo do souboru \textit{pattern.proj}, k
 \end{lstlisting}
 
 \section{Realizace aplikace}
-Celá aplikace je realizována v prostředí prostřednictvím programovacího jazyka Java pomocí frameworku NetBeans Platform.
+Celá aplikace je realizována v prostředí prostřednictvím programovacího jazyka \textbf{Java} a pomocí frameworku \textbf{NetBeans Platform} \cite{sw:nb_platform}.
 
 \subsection{Vývojové prostředí}
-Netbeans Platform je programové prostředí patřící do skupiny Rich Client Platform (RCP). RCP je soubor programátorských nástrojů zjednodušující vývoj aplikace. Většina RCP poskytuje následující funkce:
+Netbeans Platform je programové prostředí patřící do skupiny \textit{Rich Client Platform (RCP)}. RCP je soubor programátorských nástrojů zjednodušující vývoj aplikace. Většina RCP poskytuje následující funkce:
 \begin{itemize}
 	\item manažer životního cyklu aplikace
 	\item bundling framework
 	\item pokročilé nástroje pro tvorbu uživatelského rozhraní
 	\item nástroje pro internacionalizaci
-	\item 
+	\item a další
 \end{itemize}
 
-Příklady takových frameworků pro jazyk Java jsou Eclipse RCP, Netbeans Platform a Spring Framework.
+Příklady dalších frameworků pro jazyk Java jsou \textit{Eclipse RCP}~\cite{sw:eclipse_rcp} a \textit{Spring Framework}~\cite{sw:spring_framework}.
 
 \subsubsection{Netbeans Platform}
-Pro vývoj aplikace byla zvolena NetBeans platform na základě dřívějších zkušeností autora. NetBeans Platform nabízí ucelenou sadu komponent, podpůrných tříd a propracovanou modulární architekturu s konkrétními promyšlenými API, které výrazně urychlí vývoj a správu programů.
+Pro vývoj aplikace byla zvolena NetBeans Platform na základě dřívějších zkušeností autora. NetBeans Platform nabízí ucelenou sadu komponent, podpůrných tříd a propracovanou modulární architekturu s konkrétními promyšlenými API, které výrazně urychlují vývoj a správu aplikací~\cite{book:nb_guide}\cite{book:nb_for_beginers}.
 
 \subsection{Podpůrné knihovny}
 V aplikace používá následující dostupné opensource knihovny:
@@ -1059,18 +1070,15 @@ V aplikace používá následující dostupné opensource knihovny:
 \chapter{Diskuze}
 V této kapitole jsou rozebrány výsledky detekce a klasifikace.
 
-Navržená metoda detekce částic má problémy při separování částic, které jsou příliš blízko u sebe. Takové částice se vyznačují nízkou nebo téměř žádnou magnitudou gradientu v místě přechodu mezi částicemi.
+Navržená metoda detekce částic má problémy při separování částic, které jsou příliš blízko u sebe. Takové částice se vyznačují nízkou nebo téměř žádnou magnitudou gradientu v~místě přechodu mezi částicemi.
 
-Tento problém jsem se pokoušel velice aktivně řešit, ale žádné zvolené řešení nevedlo k ideální segmentaci. Proběhl pokus o zpřesnění segmentace pomocí metody watershed. Problémem watershedu je, že potřebuje znát počáteční místa ve snímku, odkud může růst. Právě nalezení těchto míst je klíčovou součástí úspěšné segmentace pomocí watershed algoritmu.
+Tento problém jsem se pokoušel velice aktivně řešit, ale žádné zvolené řešení nevedlo k~ideální segmentaci. Proběhl pokus o zpřesnění segmentace pomocí metody \textit{watershed}. Problémem \textit{watershed} algoritmu je, že potřebuje znát počáteční místa ve snímku, odkud může růst. Právě nalezení těchto míst je klíčovou součástí úspěšné segmentace pomocí \textit{watershed} algoritmu.
 
 Vyzkoušel jsem hledání těchto míst pomocí distanční transformace i iterativní eroze na nekonvexní objekty. Konvexita se projevila být dobrým testem pro špatně nebo dobře segmentované částice. Ty špatně segmentované jsou nekonvexní.
 
-Takto aplikovaný watershed dokázal oddělit některé částice lépe. Avšak na jiných případech vykazoval chybu v podobě přesegmentovaní a negativně ovlivňoval výsledky celé segmentace a následně klasifikace. Proto nakonec jako výsledné řešení bylo ponecháno "pouze primitivní" adaptivní prahování aby nedocházelo ke zbytečné zátěži programových a hardwarových komponent. S tím že případná oprava bude ponechána na interaktivním zásahu uživatele.
+Takto aplikovaný watershed dokázal oddělit některé částice lépe. Avšak na jiných případech vykazoval chybu v podobě pře-segmentování a negativně ovlivňoval výsledky celé segmentace a následně klasifikace. Proto nakonec jako výsledné řešení bylo ponecháno "pouze primitivní" adaptivní prahování aby nedocházelo ke zbytečné zátěži programových a hardwarových komponent. S tím, že případná oprava bude ponechána na interaktivním zásahu uživatele.
 
-Navržený klasifikátor umožňuje klasifikovat data a jeho přesnost byla uznána laboranty jako dostačující. Velikým přínosem je, že klasifikátor dokáže úspěšně klasifikovat částice typu kolečko od zbytku. Jelikož částic typu kolečko se ve snímcích nachází nejvíce a problematicky se trefují pomocí myši, jejich přeznačování by stálo značné úsilí. Takto laborant může přeznačit okolo 10 špatně klasifikovaných částic, které se dobře trefují myší. Tento úkon pak zabírá minimální 
-
-Zhodnocení výsledků detekce. Pořád to není úplně ono navržené metody stále selhávají např. na obr. Důvodem je malý nejčastěji kontrast částic s okolím. Nebo jejich těsná blízkost\\
-Zhodnocení výsledků klasifikace. Byl ozkoušeno testování pomocí konvexity ale nepodařilo se dotáhnout do konce.
+Navržený klasifikátor umožňuje klasifikovat data a jeho přesnost byla uznána laboranty jako dostačující. Velikým přínosem je, že klasifikátor dokáže úspěšně klasifikovat částice typu kolečko od zbytku. Jelikož částic typu kolečko se ve snímcích nachází nejvíce a problematicky se trefují pomocí myši, jejich přeznačování by stálo značné úsilí. Takto laborant může přeznačit okolo 10-ti špatně klasifikovaných částic, které se dobře trefují myší. Tento úkon pak zabírá minimální čas.
 
 Implementovaná aplikace byla otestována a funguje na operačních systémech Windows 7/8.1 a Mac OS X 10.9.
 
@@ -1080,9 +1088,9 @@ Aplikace nyní míří do testovacího provozu, ve kterém se prověří její s
 \section{Shrnutí práce}
 Diplomová práce se zabývá problematikou automatizované analýzy nanočástic v mikroskopických snímcích. Je rozebrána důležitost automatizované analýzy nanočástic. Následně jsou uvedeny základní požadavky na program schopný takovou analýzu provádět. Je zjištěno že pro úspěšnou analýzu nanočástic v mikroskopických snímcích je potřeba částice nejprve správně detekovat a následně klasifikovat.
 
-Pro účely detekce jsou nejprve algoritmy které umožňují detekci nanočástic v mikroskopických snímcích. Na základě analýzy je vybrán zvolený způsob detekce nanočástic. Zvolený algoritmus detekce využívá adaptivního prahování a morfologických operací. Algoritmus byl implementován v jazyce Java za využití knihovny OpenCV. Výstupy detekčního algoritmu jsou analyzovány a vyhodnoceny na reálných testovacích datech. Úspěšnost detekce obecně nejde pod 90\%. Zvolený algoritmus má problémy při detekci částic, které se překrývají nebo jsou blízko u sebe.
+Pro účely detekce jsou nejprve algoritmy které umožňují detekci nanočástic v~mikroskopických snímcích. Na základě analýzy je vybrán zvolený způsob detekce nanočástic. Zvolený algoritmus detekce využívá adaptivního prahování a morfologických operací. Algoritmus byl implementován v jazyce Java za využití knihovny OpenCV. Výstupy detekčního algoritmu jsou analyzovány a vyhodnoceny na reálných testovacích datech. Úspěšnost detekce obecně nejde pod 90\%. Zvolený algoritmus má problémy při detekci částic, které se překrývají nebo jsou blízko u sebe.
 
-Dále jsou analyzovány způsoby klasifikace nanočástic v mikroskopických snímcích. Na základě analýzy je vybrán vhodný klasifikační algoritmus. Jako klasifikační algoritmus bylo vybrán algoritmus k-nejbližších sousedů. Jsou uvedeny výsledky klasifikace za použití K-NN na reálných testovacích datech pocházejících z provozu UMG. Úspěšnost klasifikace pomocí K-NN nejde pod 80\%.
+Dále jsou analyzovány způsoby klasifikace nanočástic v mikroskopických snímcích. Na základě analýzy je vybrán vhodný klasifikační algoritmus. Jako klasifikační algoritmus bylo vybrán algoritmus k--nejbližších sousedů. Jsou uvedeny výsledky klasifikace za použití K--NN na reálných testovacích datech pocházejících z provozu UMG. Úspěšnost klasifikace pomocí K--NN nejde pod 80\%.
 
 Detekční a klasifikační algoritmus je součástí implementovaného programu, který umožňuje automatizovanou detekci, klasifikaci a analýzu nanočástic. Program poskytuje pro analýzu nanočástic rozličné inspeční nástroje jako je shluková analýza pomocí dendrogramu a další. Program je naimplementován v programovacím jazyce jazyce Java za využití frameworku NetBeans Platform.
 
@@ -1110,19 +1118,24 @@ Mikroskopické vzorky se jsou často objemové a snímají se po jednotlivých �
 \chapter{Seznam použitých zkratek}
 
 \begin{description}
+\item[API] - Aplication Programming Interface
 \item[NP] - Nanočástice, z aglického \textit{nanoparticles}
 \item[TEM] - Transmisní elektronová mikroskopie
 \item[SEM] - Rastrovací elektronový mikroskop
 \item[UMG] - Ústav molekulární genetiky, Ústav Akademie Věd České Republiky
+\item[SVM] - Support Vector Machines
 \end{description}
 
 %*****************************************************************************
+\clearpage
+\thispagestyle{empty}
 \chapter{Obsah přiloženého CD}
 V této kapitole naleznete obsah CD přiloženého k této diplomové práci.
 
 \begin{itemize}
 	\item readme.txt - popis obsahu CD s dalšími informacemi
 	\item pattern/ - zdrojové kódy aplikace v jazyce Java
+	\item data/ - vzorky obrázků
 	\item text/
 	\begin{itemize}
 		\item src/ - zdrojový text v LaTeXu, včetně obrázků a šablon
@@ -1133,10 +1146,28 @@ V této kapitole naleznete obsah CD přiloženého k této diplomové práci.
 \chapter{Snímky obrazovky}
 \label{apend:screens}
 
+\noindent Obrázek 1: Analýza data pomocí dendrogramu.
 \begin{figure}
 	\centering
-	\includegraphics[scale=1]{figures/app_screen_selection.png}
+	\includegraphics[scale=0.3, angle=90]{figures/app_cluster_analysis_dendrogram.png}
 \end{figure}
 
+\noindent Obrázek 2: Ukázka rozčlenění do shluků po řezu v histogramu.
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.3, angle=90]{figures/app_cluster_analysis_show.png}
+\end{figure}
+
+\noindent Obrázek 3: Ukázka aplikace při provedeném výběru částic.
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.3, angle=90]{figures/app_screen_selection.png}
+\end{figure}
+
+\noindent Obrázek 4: Ukázka okna s aplikací.
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.3, angle = 90]{figures/app_screen_image_info}
+\end{figure}
 
 \end{document}
